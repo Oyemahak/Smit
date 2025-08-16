@@ -1,0 +1,160 @@
+/* landing.css — Dark Animated Gradient Background with Orb Centerpiece */
+
+.landing-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(145deg, #0f0c29, #000000, #0f0c29);
+    background-size: 100% 100%;
+    animation: gradientShift 20s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Orb canvas styling */
+.orb-container {
+    width: 600px;
+    height: 600px;
+    max-width: 90vw;
+    max-height: 90vw;
+    min-height: 200px;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: screen;
+    transition: transform 0.3s ease;
+}
+
+canvas:hover {
+    transform: scale(1.05);
+}
+
+/* Overlay content */
+.overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 3;
+    color: white;
+    max-width: 90vw;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.overlay-content img.landing-logo {
+    max-width: 120px;
+    margin-bottom: 20px;
+}
+
+.overlay-content h1 {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ffffff, #ccc);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.overlay-content p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #dddddd;
+    margin-bottom: 40px;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+}
+
+/* Final Glassy Gradient Button Style */
+.enter-button {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    color: white;
+    font-size: 1rem;
+    padding: 12px 32px;
+    border-radius: 30px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.4s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 0 transparent;
+}
+
+.enter-button:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    transform: scale(1.05);
+    color: #ffffff;
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .overlay-content h1 {
+        font-size: 1.5rem;
+        margin-bottom: 16px;
+    }
+
+    .overlay-content p {
+        font-size: 1rem;
+        margin-bottom: 32px;
+    }
+
+    .enter-button {
+        font-size: 1rem;
+        padding: 10px 24px;
+    }
+
+    .overlay-content img.landing-logo {
+        max-width: 90px;
+        margin-bottom: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .overlay-content h1 {
+        font-size: 1rem;
+        margin-bottom: 0px;
+    }
+
+    .overlay-content p {
+        font-size: 0.7rem;
+    }
+    .enter-button {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+    }
+
+    .overlay-content img.landing-logo {
+        max-width: 40px;
+        margin-bottom: 0px;
+    }
+}

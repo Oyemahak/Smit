@@ -1,0 +1,518 @@
+/* ========================================== */
+/*           PROJECTS GRID STYLING            */
+/* ========================================== */
+
+.projects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+.project {
+  position: relative;
+  flex: 1 1 calc(33.333% - 32px);
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  cursor: default;
+  transition: box-shadow 0.3s ease;
+}
+
+.project:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.project-content {
+  transition: filter 0.3s ease;
+}
+
+.project:hover .project-content {
+  filter: blur(2px) brightness(0.6);
+}
+
+.project img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.project h3 {
+  margin: 16px 0 8px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.project p {
+  font-size: 18px;
+  color: #ccc;
+}
+
+.view-project-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  background: rgba(60, 130, 246, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.project:hover .view-project-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  cursor: pointer;
+}
+
+/* ========================================== */
+/*           CASE STUDY BASE STYLES           */
+/* ========================================== */
+
+.case-study-page {
+  padding: 24px 16px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.case-study-section {
+  margin-bottom: 48px;
+  padding: 24px;
+  background-color: transparent;
+  border: 2px dashed #444;
+  border-radius: 8px;
+}
+
+.case-study-section-recommendations {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: transparent;
+}
+
+.case-study-intro {
+  text-align: center;
+  margin-bottom: 48px;
+  color: #ffffff;
+  background-color: transparent;
+}
+
+/* ========================================== */
+/*           CASE STUDY TYPOGRAPHY            */
+/* ========================================== */
+
+.case-study-intro h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.case-study-section h2 {
+  font-size: 26px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.case-study-section h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.project-type {
+  font-size: 18px;
+  color: #999999;
+}
+
+.project-description {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #cccccc;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ========================================== */
+/*           LAYOUT COMPONENTS                */
+/* ========================================== */
+
+/* Two Column Layout */
+.cs-two-col {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+}
+
+.cs-two-col > div {
+  flex: 1 1 calc(50% - 16px);
+}
+
+/* Three Column Layout */
+.cs-three-col {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.cs-three-col > div {
+  flex: 1 1 calc(33.333% - 16px);
+  color: #ccc;
+}
+
+.cs-three-col h3 {
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* List Styling */
+.cs-list {
+  padding-left: 18px;
+  line-height: 2.4;
+  color: #ccc;
+}
+
+/* ========================================== */
+/*           ARROW GRID LAYOUTS               */
+/* ========================================== */
+
+.cs-arrow-grid-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-top: 32px;
+  align-items: center;
+}
+
+.cs-grid-row {
+  display: grid;
+  grid-template-columns: auto 60px auto;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.cs-grid-row img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.cs-arrow-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Arrow Icons */
+.arrow-icon-between {
+  font-size: 32px;
+  color: #444;
+}
+
+.mobile-only.arrow-icon-between {
+  display: none;
+}
+
+.desktop-only.arrow-icon-between {
+  display: inline-block;
+}
+
+/* 3x2 Grid Layout */
+.cs-arrow-grid-3x2 {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(2, auto);
+  gap: 48px 36px;
+  justify-content: center;
+  margin-top: 32px;
+  position: relative;
+}
+
+.cs-arrow-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-arrow-cell img {
+  width: auto;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* ========================================== */
+/*           IMAGES & MOCKUPS                 */
+/* ========================================== */
+
+.cs-image {
+  width: 100%;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.cs-image:hover {
+  transform: scale(1.015);
+}
+
+.cs-flex-images {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.cs-flex-images img {
+  width: 48%;
+  max-width: 480px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Mockup Hover Effects */
+.cs-mockup-wrapper {
+  position: relative;
+  flex: 1 1 48%;
+  max-width: 480px;
+}
+
+.cs-mockup-wrapper img {
+  width: 100%;
+  display: block;
+}
+
+.cs-mockup-wrapper:hover img {
+  filter: blur(2px) brightness(0.6);
+}
+
+.cs-mockup-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  opacity: 0;
+  background: rgba(60, 130, 246, 0.85);
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  z-index: 10;
+}
+
+.cs-mockup-wrapper:hover .cs-mockup-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  cursor: pointer;
+}
+
+/* ========================================== */
+/*           BUTTONS & NAVIGATION             */
+/* ========================================== */
+
+.prototype-buttons,
+.case-study-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 48px 0 32px;
+}
+
+.cs-button {
+  background-color: #3C82F6;
+  color: white;
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cs-button:hover {
+  background-color: #246ae0;
+}
+
+.cs-button.outline {
+  background-color: transparent;
+  border: 2px solid #3C82F6;
+}
+
+.cs-button i {
+  font-size: 14px;
+}
+
+.back-btn i {
+  margin-right: 8px;
+}
+
+.next-btn i {
+  margin-left: 8px;
+}
+
+/* ========================================== */
+/*           UTILITY COMPONENTS               */
+/* ========================================== */
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 48px auto;
+}
+
+.desktop-only {
+  display: inline-block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* ========================================== */
+/*           PROJECT-SPECIFIC STYLES          */
+/* ========================================== */
+
+.amazon-case-study img,
+.citi-case-study img {
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.amazon-case-study .cs-flex-images img {
+  transition: none;
+}
+
+/* Accenture Case Study Specific Styles */
+.accenture-case-study .cs-grid-row h4 {
+  text-align: center;
+  margin: 15px 0 10px;
+  font-weight: 600;
+}
+
+.accenture-case-study .cs-grid-row h4:contains("Before") {
+  color: #CA3132;
+}
+
+.accenture-case-study .cs-grid-row h4:contains("After") {
+  color: #3C82F6;
+}
+
+.accenture-case-study .cs-grid-row h4:contains("Alternate Option") {
+  color: #ccc;
+}
+
+/* Fallback for browsers that don't support :contains() */
+.accenture-case-study .cs-grid-row h4[class*="before"] {
+  color: #CA3132;
+}
+
+.accenture-case-study .cs-grid-row h4[class*="after"] {
+  color: #3C82F6;
+}
+
+.accenture-case-study .cs-grid-row h4[class*="alternate"] {
+  color: #ccc;
+}
+
+/* ========================================== */
+/*           RESPONSIVE STYLES                */
+/* ========================================== */
+
+@media (max-width: 992px) {
+  .project {
+    flex: 1 1 calc(50% - 16px);
+  }
+}
+
+@media (max-width: 768px) {
+  .case-study-intro h1 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  /* Arrow Grids */
+  .cs-arrow-grid-rows {
+    gap: 24px;
+  }
+
+  .cs-grid-row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mobile-only.arrow-icon-between {
+    display: inline-block;
+  }
+  
+  .desktop-only.arrow-icon-between {
+    display: none;
+  }
+
+  /* Layout Adjustments */
+  .cs-three-col {
+    flex-direction: column;
+  }
+
+  .cs-three-col > div,
+  .cs-two-col > div,
+  .amazon-case-study .cs-two-col > div,
+  .citi-case-study .cs-two-col > div {
+    flex: 1 1 100%;
+  }
+
+  /* Image Groups */
+  .cs-grid-row img,
+  .cs-flex-images img,
+  .citi-case-study .cs-flex-images img {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .case-study-section h2 {
+    font-size: 22px;
+}
+  .project {
+    flex: 1 1 100%;
+    padding: 16px;
+  }
+
+  .view-project-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}

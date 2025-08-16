@@ -1,0 +1,32 @@
+# Logs
+*.log
+
+# Dependency directories
+node_modules/
+
+# Vite output
+dist/
+.vite/
+
+# Env files
+.env
+.env.*
+
+# macOS / Windows system files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Optional: lock files (uncomment if needed)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
