@@ -1,70 +1,72 @@
-// WorkedFor.jsx — Professional experience showcase in grid and carousel 💼
+// WorkedFor.jsx — Glassy Flip Cards for Smit 💼
 
 import React from "react";
 
-// Direct imports for consistent local + GitHub Pages builds
-import company1 from "../assets/images/company1.png";
-import company2 from "../assets/images/company2.png";
-import company3 from "../assets/images/company3.png";
-import company4 from "../assets/images/company4.png";
+import cocoonLogo from '../assets/images/cocoon.png';
+import boobooLogo from '../assets/images/booboo.png';
+import tirthLogo from '../assets/images/canstem.png'; // Replace with correct Tirth logo
+import freelanceLogo from '../assets/images/freelance.png';
 
-import accenture from "../assets/images/accenture.png";
-import citi from "../assets/images/citi.png";
-import dazzlingSmile from "../assets/images/dazzling-smile.png";
-import canstem from "../assets/images/canstem.png";
+const companies = [
+  {
+    name: "Cocoon Care",
+    role: "Graphic Designer",
+    description:
+      "Crafted Amazon product posters and polished visuals for wellness campaigns. Assisted with UI screens for mobile booking flows.",
+    logo: cocoonLogo,
+    website: "https://www.cocooncare.com/"
+  },
+  {
+    name: "BooBoo Club",
+    role: "Graphic Designer",
+    description:
+      "Designed Amazon promo posters, digital brand kits, and illustrations for telehealth campaigns and Instagram branding.",
+    logo: boobooLogo,
+    website: "https://www.instagram.com/theboobooclub"
+  },
+  {
+    name: "Tirth Thermocol Decoration",
+    role: "Web Designer",
+    description:
+      "Designed responsive pages for showcasing customized decorative products for events and exhibitions.",
+    logo: tirthLogo,
+    website: "#"
+  },
+  {
+    name: "Freelancing",
+    role: "Web & Graphic Designer",
+    description:
+      "Delivered websites, branding kits, and social assets for small businesses using Wix, WordPress, and Canva.",
+    logo: freelanceLogo,
+    website: "#"
+  }
+];
 
 const WorkedFor = () => {
   return (
-    <section id="worked-for">
+    <section>
       <h2>Worked For</h2>
+      <div className="workedfor-grid">
+        {companies.map((company, index) => (
+          <div key={index} className="flip-card">
+            <div className="flip-inner">
+              {/* Front */}
+              <div className="flip-front">
+                <img src={company.logo} alt={company.name} className="company-logo" />
+                <h3>{company.name}</h3>
+                <p className="role">{company.role}</p>
+              </div>
 
-      {/* Desktop Grid View */}
-      <div className="worked-for-container">
-        <div className="worked-for-grid">
-          <div className="company-14 tooltip">
-            <img src={company1} alt="Citi Bank" />
-            <span className="tooltiptext">
-              Led UX design for internal B2B dashboards. Focused on usability improvements,
-              interaction design, and system flows as a core contributor.
-            </span>
+              {/* Back */}
+              <div className="flip-back">
+                <p className="description">{company.description}</p>
+                <a href={company.website} target="_blank" rel="noopener noreferrer">
+                  <button className="visit-btn">Visit Website</button>
+                </a>
+              </div>
+            </div>
           </div>
-
-          <div className="company-23 tooltip">
-            <img src={company2} alt="Accenture" />
-            <span className="tooltiptext">
-              Worked on front-end development and prototyping for enterprise tools. Built
-              interfaces with attention to detail, performance, and accessibility.
-            </span>
-          </div>
-
-          <div className="company-23 tooltip">
-            <img src={company3} alt="Dazzling Smiles" />
-            <span className="tooltiptext">
-              Designed and developed a full custom WordPress website. Managed everything
-              from layout to optimization for a responsive dental service site.
-            </span>
-          </div>
-
-          <div className="company-14 tooltip">
-            <img src={company4} alt="CanSTEM Education" />
-            <span className="tooltiptext">
-              Redesigned web platforms and managed digital service delivery. Conducted UX
-              research, improved SEO, and enhanced user engagement for an educational client.
-            </span>
-          </div>
-        </div>
-
-        {/* Mobile Carousel View */}
-        <div className="carousel-arrows">
-          <button className="arrow-left" disabled>&#10094;</button>
-          <div className="worked-for-mobile">
-            <img className="mobile-companies-img" src={accenture} alt="Accenture" />
-            <img className="mobile-companies-img active" src={citi} alt="Citi Bank" />
-            <img className="mobile-companies-img" src={dazzlingSmile} alt="Dazzling Smiles" />
-            <img className="mobile-companies-img" src={canstem} alt="CanSTEM Education" />
-          </div>
-          <button className="arrow-right">&#10095;</button>
-        </div>
+        ))}
       </div>
     </section>
   );
