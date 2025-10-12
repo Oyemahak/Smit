@@ -1,5 +1,4 @@
-// EnhancedBeforeAfterSlider.jsx — Magical Motion Reveal ✨
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import "../styles/slider.css";
 import beforeImg from "../assets/images/before.png";
 import afterImg from "../assets/images/after.png";
@@ -9,6 +8,8 @@ const EnhancedBeforeAfterSlider = () => {
   const afterRef = useRef(null);
   const handleRef = useRef(null);
 
+  const [percent, setPercent] = useState(50); // control label fade logic
+
   useEffect(() => {
     const container = containerRef.current;
     const after = afterRef.current;
@@ -17,9 +18,10 @@ const EnhancedBeforeAfterSlider = () => {
     const updatePosition = (x) => {
       const rect = container.getBoundingClientRect();
       const offsetX = Math.max(0, Math.min(x - rect.left, rect.width));
-      const percent = (offsetX / rect.width) * 100;
-      after.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
-      handle.style.left = `${percent}%`;
+      const newPercent = (offsetX / rect.width) * 100;
+      setPercent(newPercent);
+      after.style.clipPath = `inset(0 ${100 - newPercent}% 0 0)`;
+      handle.style.left = `${newPercent}%`;
       handle.style.transition = "left 0.15s ease-out";
     };
 
@@ -44,8 +46,22 @@ const EnhancedBeforeAfterSlider = () => {
     handle.addEventListener("mousedown", startDrag);
     handle.addEventListener("touchstart", startDrag);
 
-    // Initial center
-    updatePosition(container.offsetWidth / 2);
+    // ✅ Center slider after both images load
+    const images = container.querySelectorAll("img");
+    let loadedCount = 0;
+
+    const tryInit = () => {
+      loadedCount++;
+      if (loadedCount === images.length) {
+        const centerX = container.offsetWidth / 2;
+        updatePosition(container.getBoundingClientRect().left + centerX);
+      }
+    };
+
+    images.forEach((img) => {
+      if (img.complete) tryInit();
+      else img.onload = tryInit;
+    });
 
     return () => {
       handle.removeEventListener("mousedown", startDrag);
@@ -53,17 +69,30 @@ const EnhancedBeforeAfterSlider = () => {
     };
   }, []);
 
+  // 🧠 Label fade logic (fixed version)
+  const afterOpacity = percent < 80 ? 1 : 1 - (percent - 80) / 20; // fades when going right
+  const beforeOpacity = percent > 20 ? 1 : percent / 20; // fades when going left
+
   return (
-    <div className="compare-container fancy-blur" ref={containerRef}>
+    <div className="compare-container" ref={containerRef}>
       <img src={beforeImg} alt="Before" className="before-img" />
       <img src={afterImg} alt="After" className="after-img" ref={afterRef} />
 
-      <div className="slider-handle fancy-shadow" ref={handleRef}>
-        <span className="handle-dot fancy-glow"></span>
+      <div className="slider-handle" ref={handleRef}>
+        <span className="handle-dot"></span>
       </div>
 
-      <div className="label before-label">Before</div>
-      <div className="label after-label">After</div>
+      {/* 🧩 Corrected label logic */}
+      {beforeOpacity > 0 && (
+        <div className="label before-label" style={{ opacity: beforeOpacity }}>
+          Before
+        </div>
+      )}
+      {afterOpacity > 0 && (
+        <div className="label after-label" style={{ opacity: afterOpacity }}>
+          After
+        </div>
+      )}
     </div>
   );
 };
