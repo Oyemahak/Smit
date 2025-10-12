@@ -26,6 +26,9 @@ import DazzlingSmile from './pages/projects/DazzlingSmile';
 import AdminCMS from './pages/projects/AdminCMS';
 import VibeCoding from './pages/projects/VibeCoding';
 
+// Case Study Page with Before/After Slider
+import ProjectPage from './pages/projects/ProjectPage';
+
 function App() {
   const location = useLocation();
 
@@ -54,6 +57,9 @@ function App() {
         <Route path="/dazzlingsmile" element={<DazzlingSmile />} />
         <Route path="/admincms" element={<AdminCMS />} />
         <Route path="/vibecoding" element={<VibeCoding />} />
+
+        {/* New Before/After Slider Case Study */}
+        <Route path="/project-demo" element={<ProjectPage />} />
 
         {/* Fallback */}
         <Route path="*" element={<NotFound />} />

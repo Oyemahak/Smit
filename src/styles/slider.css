@@ -1,0 +1,132 @@
+/* ============================================= */
+/*   PERFECT REVEAL SLIDER — FIXED BACKGROUND    */
+/* ============================================= */
+
+.compare-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  margin: 60px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* --- Images --- */
+.before-img,
+.after-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: clip-path 0.1s ease-out;
+}
+
+.before-img {
+  z-index: 1;
+}
+
+.after-img {
+  z-index: 2;
+  clip-path: inset(0 50% 0 0);
+  transition: clip-path 0.15s ease-out;
+}
+
+/* --- Handle Bar --- */
+.slider-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.3); /* Neutral color */
+  backdrop-filter: blur(8px);
+  border-radius: 3px;
+  transform: translateX(-50%);
+  cursor: ew-resize;
+  z-index: 3;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.slider-handle:hover {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+
+/* --- Central Knob --- */
+.handle-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.slider-handle:hover .handle-dot {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* --- Labels --- */
+.label {
+  position: absolute;
+  top: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+}
+
+.before-label {
+  left: 16px;
+}
+
+.after-label {
+  right: 16px;
+}
+
+/* --- Responsive Layout --- */
+@media screen and (max-width: 768px) {
+  .compare-container {
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .handle-dot {
+    width: 24px;
+    height: 24px;
+  }
+
+  .label {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .compare-container {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+  }
+
+  .handle-dot {
+    width: 20px;
+    height: 20px;
+  }
+}

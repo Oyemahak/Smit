@@ -1,8 +1,8 @@
-// Projects.jsx — Toggle between UX and Dev Projects 🎯
+// Projects.jsx — Final Toggle Between UX and Dev Projects 🎯
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// Image imports for consistency across environments
+// Image imports
 import project1 from "../assets/images/project1.png";
 import project2 from "../assets/images/project2.png";
 import project3 from "../assets/images/project3.png";
@@ -15,17 +15,13 @@ import project9 from "../assets/images/project9.png";
 import project10 from "../assets/images/project10.png";
 import project11 from "../assets/images/project11.png";
 import project12 from "../assets/images/project12.png";
+import beforeAfterPreview from "../assets/images/before.png";
 
 const Projects = () => {
   const [activeTab, setActiveTab] = useState("ux");
   const navigate = useNavigate();
 
-  // Switch between UX and Dev tabs
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
-
-  // UX Projects List
+  // UX Projects
   const uxProjects = [
     {
       img: project1,
@@ -37,7 +33,7 @@ const Projects = () => {
       img: project2,
       title: "Citi Bank 🔒",
       desc: "Front-End Development, Heuristic Evaluation, Prototyping",
-      route: "/citi",
+      route: "/citibank",
     },
     {
       img: project3,
@@ -48,8 +44,8 @@ const Projects = () => {
     {
       img: project4,
       title: "Style Sphere",
-      desc: "User Research, Wireframing and Prototyping, Usability Testing",
-      link: "https://www.figma.com/design/ElcB4T9sPcy7yVv1fZLoex/Styleshphere---Interaction-Design?node-id=0-1&t=kBth2aAOiCUj6fNe-1",
+      desc: "User Research, Wireframing, Usability Testing",
+      link: "https://www.figma.com/design/ElcB4T9sPcy7yVv1fZLoex/Styleshphere---Interaction-Design",
     },
     {
       img: project5,
@@ -61,11 +57,11 @@ const Projects = () => {
       img: project6,
       title: "Humber Esports",
       desc: "Heuristic Evaluation, Usability Testing, Affinity Mapping",
-      link: "https://www.figma.com/proto/WVLZIhxFNq74AdLDYFXozu/Humber-E-Sports---Group-11?page-id=429%3A1772&node-id=651-25648&node-type=FRAME&viewport=2202%2C741%2C0.06&t=AUrt3LUCrploccBq-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=651%3A25648",
+      link: "https://www.figma.com/proto/WVLZIhxFNq74AdLDYFXozu/Humber-E-Sports---Group-11",
     },
   ];
 
-  // Web Dev Projects List
+  // Web Dev Projects
   const devProjects = [
     {
       img: project7,
@@ -75,7 +71,7 @@ const Projects = () => {
     },
     {
       img: project8,
-      title: "SMS",
+      title: "School Management System",
       desc: "Admin Dashboard using ASP.NET Core MVC",
       route: "/schoolsystem",
     },
@@ -98,19 +94,17 @@ const Projects = () => {
       route: "/admincms",
     },
     {
-      img: project12,
-      title: "Vibe Coding",
-      desc: "Built in 2 hours with AI: Match Emoji Game",
-      route: "/vibecoding",
+      img: beforeAfterPreview,
+      title: "Before/After Poster Redesign",
+      desc: "Interactive Amazon Poster Comparison — Drag to Reveal Design Transformation",
+      route: "/project-demo",
     },
   ];
 
-  // Decide which set of projects to show
   const projectsToShow = activeTab === "ux" ? uxProjects : devProjects;
 
   return (
     <section id="projects">
-      {/* Header & Tabs */}
       <div className="projects-header-centered">
         <h2 id="projects-title">
           {activeTab === "ux"
@@ -121,33 +115,29 @@ const Projects = () => {
         <div className="project-toggle">
           <button
             className={`tab-toggle ${activeTab === "ux" ? "active" : ""}`}
-            onClick={() => handleTabChange("ux")}
+            onClick={() => setActiveTab("ux")}
           >
             UX Projects
           </button>
           <button
             className={`tab-toggle ${activeTab === "dev" ? "active" : ""}`}
-            onClick={() => handleTabChange("dev")}
+            onClick={() => setActiveTab("dev")}
           >
             Web Dev Projects
           </button>
         </div>
       </div>
 
-      {/* 🧊 Project Cards */}
+      {/* Project Cards */}
       <div className="projects-grid">
         {projectsToShow.map((project, index) => (
           <div className="project" key={index}>
             <div className="project-content">
-              <img
-                src={project.img}
-                alt={`${project.title} project screenshot`}
-              />
+              <img src={project.img} alt={project.title} />
               <h3>{project.title}</h3>
               <p>{project.desc}</p>
             </div>
 
-            {/* View Project Button */}
             {project.route ? (
               <button
                 className="view-project-btn"
@@ -155,7 +145,7 @@ const Projects = () => {
               >
                 View Project
               </button>
-            ) : project.link ? (
+            ) : (
               <a
                 className="view-project-btn"
                 href={project.link}
@@ -164,7 +154,7 @@ const Projects = () => {
               >
                 View Project
               </a>
-            ) : null}
+            )}
           </div>
         ))}
       </div>

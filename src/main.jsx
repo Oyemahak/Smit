@@ -11,6 +11,7 @@ import './styles/projects.css';
 import './styles/webProjects.css';
 import './styles/trash.css';
 import './styles/landing.css';
+import './styles/slider.css';
 
 // 🌍 GitHub Pages base path
 const isGitHubPages = import.meta.env.BASE_URL !== '/';
