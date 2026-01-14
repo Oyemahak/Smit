@@ -1,4 +1,5 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import React from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -12,20 +13,29 @@ import NotFound from "./pages/NotFound";
 export default function App() {
   const location = useLocation();
 
+  // Hide navbar/footer on landing if you want the landing to feel like an intro screen
+  const isLanding = location.pathname === "/" || location.pathname === "/landing";
+
   return (
     <>
       <ScrollToTop />
-      {/* Show Navbar on all pages except landing */}
-      {location.pathname !== "/" && <Navbar />}
+      {!isLanding ? <Navbar /> : null}
 
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/landing" element={<Landing />} />
+
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
+
+        {/* Optional: redirect old hash routes */}
+        <Route path="/home#projects" element={<Navigate to="/home" replace />} />
+
+        <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {location.pathname !== "/" && <Footer />}
+      {!isLanding ? <Footer /> : null}
     </>
   );
 }
