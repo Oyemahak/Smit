@@ -11,12 +11,12 @@ import NotFound from "./pages/NotFound";
 
 export default function App() {
   const location = useLocation();
-  const hideLayout = location.pathname === "/";
 
   return (
     <>
       <ScrollToTop />
-      {!hideLayout && <Navbar />}
+      {/* Show Navbar on all pages except landing */}
+      {location.pathname !== "/" && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -25,7 +25,7 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {!hideLayout && <Footer />}
+      {location.pathname !== "/" && <Footer />}
     </>
   );
 }
