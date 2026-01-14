@@ -89,14 +89,6 @@ export default function Navbar() {
 
         {/* Right: Buttons + Burger */}
         <div className="nav-right">
-          <a
-            className="nav-btn nav-btn-ghost"
-            href={`${base}smit-patel-resume.pdf`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Resume
-          </a>
 
           <a
             className="nav-btn nav-btn-accent"

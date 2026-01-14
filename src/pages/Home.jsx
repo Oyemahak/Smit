@@ -190,7 +190,7 @@ export default function Home() {
             </h1>
 
             <p className="hero-quote">
-              “Design is where creativity meets strategy — blending aesthetics with functionality for meaningful
+              “Design is where creativity meets strategy - blending aesthetics with functionality for meaningful
               experiences. I create visuals that feel premium, communicate clearly, and convert attention into action.”
             </p>
 
@@ -210,11 +210,7 @@ export default function Home() {
                 <li>Database: SQL, MySQL</li>
               </ul>
             </div>
-                        <div className="hero-actions">
-              <a className="btn btn-accent" href="https://wa.me/917698641630" target="_blank" rel="noopener noreferrer">
-                Hire me
-              </a>
-
+            <div className="hero-actions">
               <a
                 className="btn btn-ghost"
                 href={`${base}smit-patel-resume.pdf`}
@@ -232,7 +228,7 @@ export default function Home() {
       <GallerySection
         id="projects"
         title="Posters"
-        subtitle="Banners + posters — click any to view full."
+        subtitle="Banners + posters - click any to view full."
         images={posterBannerImages}
         density="super"
       />
