@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import '../styles/global.css';
+import React, { useEffect, useState } from "react";
 
-const Contact = () => {
-  const [formStatus, setFormStatus] = useState('');
+export default function Contact() {
+  const [formStatus, setFormStatus] = useState("");
   const [statusVisible, setStatusVisible] = useState(false);
 
   useEffect(() => {
     const listener = () => {
-      document.querySelectorAll('.celebration-emoji').forEach(e => e.remove());
+      document.querySelectorAll(".celebration-emoji").forEach((e) => e.remove());
     };
-    window.addEventListener('contact:celebrate', listener);
-    return () => window.removeEventListener('contact:celebrate', listener);
+    window.addEventListener("contact:celebrate", listener);
+    return () => window.removeEventListener("contact:celebrate", listener);
   }, []);
 
   const handleSubmit = async (e) => {
@@ -18,42 +17,42 @@ const Contact = () => {
     const form = e.target;
     const formData = new FormData(form);
 
-    // Show loading
-    setFormStatus('Sending...');
+    setFormStatus("Sending...");
     setStatusVisible(true);
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/mahakpateluiux@gmail.com', {
-        method: 'POST',
+      // ✅ Replace this with Smit's real email later
+      const receiverEmail = "smitpatel@example.com";
+
+      const res = await fetch(`https://formsubmit.co/ajax/${receiverEmail}`, {
+        method: "POST",
         body: formData,
       });
 
-      const result = await response.json();
-      if (result.success === 'true') {
-        setFormStatus('🎉 Message sent successfully!');
+      const result = await res.json();
+
+      if (result.success === "true") {
+        setFormStatus("🎉 Message sent successfully!");
         form.reset();
         triggerCelebration();
       } else {
-        setFormStatus('❌ Something went wrong. Please try again.');
+        setFormStatus("❌ Something went wrong. Please try again.");
       }
-    } catch (error) {
-      setFormStatus('❌ Failed to send. Try again later.');
+    } catch {
+      setFormStatus("❌ Failed to send. Try again later.");
     }
 
-    // Hide after 4s
-    setTimeout(() => {
-      setStatusVisible(false);
-    }, 4000);
+    setTimeout(() => setStatusVisible(false), 4000);
   };
 
   const triggerCelebration = () => {
-    const emojis = ['🎊', '✨', '🎉', '🎈'];
-    for (let i = 0; i < 64; i++) {
-      const el = document.createElement('span');
+    const emojis = ["🎊", "✨", "🎉", "🎈"];
+    for (let i = 0; i < 48; i++) {
+      const el = document.createElement("span");
       el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      el.className = 'celebration-emoji';
+      el.className = "celebration-emoji";
       el.style.left = `${Math.random() * 100}vw`;
-      el.style.top = `${Math.random() * -100}px`;
+      el.style.top = `${Math.random() * -120}px`;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 3000);
     }
@@ -64,7 +63,7 @@ const Contact = () => {
       <div className="contact-container">
         <h2 className="contact-header">Get in Touch</h2>
         <p className="contact-description">
-          Have a question or want to work together? I'd love to hear from you.
+          Have a question or want to work together? Send a message.
         </p>
 
         <form id="contact-form" onSubmit={handleSubmit}>
@@ -87,11 +86,10 @@ const Contact = () => {
           </div>
 
           <div className="form-status-wrap">
-            <button type="submit" className="send-message-button">Send Message</button>
-            <div
-              className="form-status-text"
-              style={{ opacity: statusVisible ? 1 : 0 }}
-            >
+            <button type="submit" className="send-message-button">
+              Send Message
+            </button>
+            <div className="form-status-text" style={{ opacity: statusVisible ? 1 : 0 }}>
               {formStatus}
             </div>
           </div>
@@ -99,6 +97,4 @@ const Contact = () => {
       </div>
     </section>
   );
-};
-
-export default Contact;
+}

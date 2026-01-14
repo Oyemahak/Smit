@@ -1,44 +1,20 @@
 import React from "react";
-import Footer from "../components/Footer";
-import "../styles/trash.css";
-import "../styles/webProjects.css";
-import lostAstronaut from "../assets/images/404.gif";
+import { Link } from "react-router-dom";
 
-const NotFound = () => {
-    return (
-        <>
-            <main className="case-study-page">
-                <section className="case-study-intro not-found-wrapper">
-                    <div className="intro-right">
-                        <p className="cta">Even our QR codes couldn’t find this page…</p>
-                        <img
-                            src={lostAstronaut}
-                            alt="Lost astronaut floating in space"
-                            className="animated-404-gif"
-                            loading="lazy" decoding="async"
-                        />
-                    </div>
-                    <div className="intro-left">
-                        <h1>404 - Page Not Found</h1>
-                        <p className="project-description">
-                            Uh-oh! You've wandered off the grid. This page doesn't exist - or maybe it packed its bags and left the internet 🌍✈️
-                        </p>
-                        <p className="project-description">
-                            Let's take you back where things make sense.
-                        </p>
+export default function NotFound() {
+  return (
+    <main id="main-content">
+      <section className="not-found-wrapper">
+        <h1>404</h1>
+        <p className="project-description">
+          This page doesn’t exist. Let’s take you back home.
+        </p>
 
-                        <div className="button-group">
-                            <a href="/home" className="button-glass">🏠 Go Home</a>
-                            <a href="/play" className="button-glass">🎯 Explore My Micro Game</a>
-                        </div>
-                    </div>
-                </section>
-
-                <div className="separator"></div>
-                <Footer />
-            </main>
-        </>
-    );
-};
-
-export default NotFound;
+        <div className="button-group">
+          <Link to="/home" className="button-glass">Go Home</Link>
+          <Link to="/about" className="button-glass">About</Link>
+        </div>
+      </section>
+    </main>
+  );
+}

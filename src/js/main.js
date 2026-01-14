@@ -1,165 +1,122 @@
-// main.js — Global JS Orchestrator 🎩
-// Handles theme switching, dynamic imports, carousel, and contact form
+// src/js/main.js — Smit Portfolio DOM Helpers 🎩
+// Minimal + safe for React SPA.
+// ✅ Sets initial theme class (light/dark) to prevent flash
+// ✅ Mobile menu open/close
+// ✅ Smooth scroll to #contact / #work anchors
+// ✅ Auto-close menu on outside click + link click
 
-function waitForThemeButtonsAndInit() {
-  if (document.querySelectorAll('.theme-btn').length === 0) {
-    requestAnimationFrame(waitForThemeButtonsAndInit);
-    return;
+(function () {
+  let bound = false;
+
+  function applySavedTheme() {
+    // Navbar.jsx uses localStorage key: "theme"
+    const saved = localStorage.getItem("theme") || "dark";
+    document.body.classList.remove("light-theme", "dark-theme");
+    document.body.classList.add(`${saved}-theme`);
   }
 
-  const themeBtns = document.querySelectorAll('.theme-btn');
-  const savedTheme = localStorage.getItem('portfolio-theme') || 'rain';
+  function smoothScrollToHash(hash) {
+    if (!hash) return;
+    const id = hash.replace("#", "");
+    const el = document.getElementById(id);
+    if (!el) return;
 
-  // Dynamically import only what's needed 🌈
-  async function applyTheme(theme) {
-    document.body.className = `${theme}-theme`;
-    localStorage.setItem('portfolio-theme', theme);
-    themeBtns.forEach(b => b.classList.remove('active'));
-    const btn = document.querySelector(`[data-theme="${theme}"]`);
-    if (btn) {
-      btn.classList.add('active');
-    } else {
-      // Retry once on next frame if DOM not yet ready
-      requestAnimationFrame(() => {
-        document.querySelector(`[data-theme="${theme}"]`)?.classList.add('active');
-      });
-    }
-
-    // Clear any leftovers
-    document.querySelectorAll('.snowflake, .raindrop, .ripple, .star, .moon, .lightning')
-      .forEach(el => el.remove());
-
-    if (theme === 'moon') {
-      const { initMoonTheme } = await import('./moonTheme.js');
-      initMoonTheme();
-    } else if (theme === 'snow') {
-      const { initSnowTheme } = await import('./snowTheme.js');
-      initSnowTheme();
-    } else if (theme === 'rain') {
-      const { initRainTheme } = await import('./rainTheme.js');
-      initRainTheme();
-    }
+    // Small delay helps when route changed and React is still rendering
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
   }
 
-  // Theme button logic 🖱️
-  themeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      applyTheme(btn.dataset.theme);
-    });
-  });
+  function bindMobileMenu() {
+    const menuBtn = document.querySelector(".mobile-menu-icon");
+    const menu = document.querySelector(".desktop-menu");
 
-  applyTheme(savedTheme);
+    if (!menuBtn || !menu) return;
 
-  // Carousel Controls 🎠
-  const carouselImages = document.querySelectorAll(".mobile-companies-img");
-  const prevBtn = document.querySelector(".arrow-left");
-  const nextBtn = document.querySelector(".arrow-right");
-  let currentImage = 0;
+    const icon = menuBtn.querySelector("i");
 
-  function updateCarousel() {
-    carouselImages.forEach((img, i) =>
-      img.classList.toggle("active", i === currentImage)
-    );
-    if (prevBtn && nextBtn) {
-      prevBtn.disabled = currentImage === 0;
-      nextBtn.disabled = currentImage === carouselImages.length - 1;
-    }
-  }
+    const openMenu = () => {
+      menu.classList.add("active");
+      menuBtn.setAttribute("aria-expanded", "true");
+      if (icon) icon.className = "fas fa-times";
+    };
 
-  prevBtn?.addEventListener("click", () => {
-    if (currentImage > 0) currentImage--;
-    updateCarousel();
-  });
+    const closeMenu = () => {
+      menu.classList.remove("active");
+      menuBtn.setAttribute("aria-expanded", "false");
+      if (icon) icon.className = "fas fa-bars";
+    };
 
-  nextBtn?.addEventListener("click", () => {
-    if (currentImage < carouselImages.length - 1) currentImage++;
-    updateCarousel();
-  });
-
-  updateCarousel();
-
-  // Contact Form 💌
-  const form = document.getElementById("contact-form");
-  const status = document.getElementById("form-status");
-  const button = form?.querySelector("button");
-
-  if (form && status && button) {
-    form.addEventListener("submit", function (e) {
+    const toggleMenu = (e) => {
       e.preventDefault();
-      button.disabled = true;
-      button.textContent = "Sending...";
-      const formData = new FormData(form);
+      const isOpen = menu.classList.toggle("active");
+      menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      if (icon) icon.className = isOpen ? "fas fa-times" : "fas fa-bars";
+    };
 
-      fetch("https://formsubmit.co/ajax/mahakpateluiux@gmail.com", {
-        method: "POST",
-        body: formData,
-      })
-        .then(res => res.json())
-        .then(() => {
-          status.textContent = "🎉 Message sent!";
-          status.style.opacity = "1";
-          setTimeout(() => (status.style.opacity = "0"), 5000);
-          button.disabled = false;
-          button.textContent = "Send Message";
-          form.reset();
-          triggerCelebration();
-        })
-        .catch(() => {
-          status.textContent = "❌ Oops! Try again.";
-          button.disabled = false;
-          button.textContent = "Send Message";
-        });
-    });
-
-    function triggerCelebration() {
-      const emojis = ["🎊", "✨", "🎉", "🎈"];
-      for (let i = 0; i < 64; i++) {
-        const el = document.createElement("span");
-        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        el.className = "celebration-emoji";
-        el.style.left = Math.random() * 100 + "vw";
-        el.style.top = Math.random() * -100 + "px";
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 3000);
-      }
+    // Avoid double-binding if React re-renders
+    if (!menuBtn.dataset.bound) {
+      menuBtn.addEventListener("click", toggleMenu);
+      menuBtn.dataset.bound = "true";
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Toggle navigation menu");
     }
-  }
 
-  // Mobile Menu 🍔
-  const menuButton = document.querySelector('.mobile-menu-icon');
-  const menu = document.querySelector('.desktop-menu');
-  if (menuButton && menu) {
-    menuButton.addEventListener('click', () => {
-      const isOpen = menu.classList.toggle('active');
-      menuButton.setAttribute('aria-expanded', isOpen);
-      menuButton.querySelector('i').className = isOpen ? 'fas fa-times' : 'fas fa-bars';
-    });
-  }
+    // Close menu on link click
+    if (!menu.dataset.bound) {
+      menu.addEventListener("click", (e) => {
+        const target = e.target;
+        if (target && target.tagName === "A") closeMenu();
+      });
+      menu.dataset.bound = "true";
+    }
 
-  // Project Tabs Switcher 🔀
-  const uxBtn = document.querySelector('[data-tab="ux"]');
-  const devBtn = document.querySelector('[data-tab="dev"]');
-  const uxProjects = document.querySelector('.ux-projects');
-  const devProjects = document.querySelector('.dev-projects');
-  const title = document.getElementById('projects-title');
-
-  if (uxBtn && devBtn && uxProjects && devProjects && title) {
-    uxBtn.addEventListener('click', () => {
-      uxBtn.classList.add('active');
-      devBtn.classList.remove('active');
-      uxProjects.style.display = 'flex';
-      devProjects.style.display = 'none';
-      title.textContent = 'Featured UX Projects';
+    // Close menu on outside click
+    document.addEventListener("click", (e) => {
+      if (!menu.classList.contains("active")) return;
+      const clickedInside = menu.contains(e.target) || menuBtn.contains(e.target);
+      if (!clickedInside) closeMenu();
     });
 
-    devBtn.addEventListener('click', () => {
-      devBtn.classList.add('active');
-      uxBtn.classList.remove('active');
-      uxProjects.style.display = 'none';
-      devProjects.style.display = 'flex';
-      title.textContent = 'Featured Web Dev Projects';
+    // Close menu on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
     });
-  }
-}
 
-waitForThemeButtonsAndInit();
+    // Optional: if switching from desktop -> mobile, start closed
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 768) closeMenu();
+    });
+
+    // Helper for hash links within SPA
+    window.addEventListener("hashchange", () => smoothScrollToHash(window.location.hash));
+
+    // If user loads with hash
+    smoothScrollToHash(window.location.hash);
+  }
+
+  function init() {
+    applySavedTheme();
+    bindMobileMenu();
+  }
+
+  // Run once on load
+  window.addEventListener("DOMContentLoaded", () => {
+    init();
+
+    // Also re-run once after React mounts (safe)
+    setTimeout(() => {
+      init();
+    }, 300);
+  });
+
+  // Observe DOM changes (React SPA safety)
+  if (!bound) {
+    bound = true;
+    const observer = new MutationObserver(() => {
+      // If header/menu re-rendered, re-bind
+      bindMobileMenu();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+})();

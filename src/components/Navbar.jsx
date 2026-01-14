@@ -1,36 +1,28 @@
-// Navbar.jsx — Now with glassy sun/moon switch 🌗☀️
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import '../styles/global.css';
-import '../styles/theme-switcher.css';
+import "../styles/global.css";
+import "../styles/theme-switcher.css";
 
-import logo from '../assets/images/logo.png';
+import logo from "../assets/images/logo.png";
 
-const Navbar = () => {
+export default function Navbar() {
   const location = useLocation();
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme') || 'dark';
+    const saved = localStorage.getItem("theme") || "dark";
     setTheme(saved);
-    document.body.className = `${saved}-theme`;
+    document.body.classList.remove("light-theme", "dark-theme");
+    document.body.classList.add(`${saved}-theme`);
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-    document.body.className = `${newTheme}-theme`;
-    localStorage.setItem('theme', newTheme);
-  };
-
-  const handleContactClick = () => {
-    setTimeout(() => {
-      const contactSection = document.getElementById('contact');
-      if (contactSection) {
-        contactSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.body.classList.remove("light-theme", "dark-theme");
+    document.body.classList.add(`${next}-theme`);
+    localStorage.setItem("theme", next);
   };
 
   return (
@@ -38,7 +30,7 @@ const Navbar = () => {
       <div className="header-grid glassy-header">
         {/* Logo */}
         <div className="header-col logo-col">
-          <Link to="/">
+          <Link to="/home" className="logo-link">
             <img className="logo" src={logo} alt="Smit Patel logo" />
           </Link>
         </div>
@@ -50,7 +42,7 @@ const Navbar = () => {
             <label className="switch">
               <input
                 type="checkbox"
-                checked={theme === 'light'}
+                checked={theme === "light"}
                 onChange={toggleTheme}
               />
               <span className="slider"></span>
@@ -63,24 +55,22 @@ const Navbar = () => {
         <div className="header-col nav-col">
           <nav>
             <ul className="desktop-menu">
-              <li className="tooltip-bottom">
-                <Link to="/home" className={location.pathname === '/home' ? 'active' : ''}>Home</Link>
+              <li>
+                <Link to="/home" className={location.pathname === "/home" ? "active" : ""}>
+                  Home
+                </Link>
               </li>
-              <li className="tooltip-bottom">
-                <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>About</Link>
+              <li>
+                <Link to="/about" className={location.pathname === "/about" ? "active" : ""}>
+                  About
+                </Link>
               </li>
-              <li className="tooltip-bottom">
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleContactClick();
-                  }}
-                >
-                  Contact
-                </a>
+              <li>
+                <a href="#contact">Contact</a>
               </li>
             </ul>
+
+            {/* main.js controls open/close */}
             <div className="mobile-menu-icon">
               <i className="fas fa-bars"></i>
             </div>
@@ -89,6 +79,4 @@ const Navbar = () => {
       </div>
     </header>
   );
-};
-
-export default Navbar;
+}
