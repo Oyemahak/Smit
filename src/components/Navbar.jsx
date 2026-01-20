@@ -1,13 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-
 import logo from "../assets/images/logo.png";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
-
-  const base = import.meta.env.BASE_URL;
 
   const navItems = useMemo(
     () => [
@@ -18,23 +15,27 @@ export default function Navbar() {
     []
   );
 
+  // ✅ close menu whenever route changes
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
+
   const handleNavClick = (item) => {
     setOpen(false);
 
-    if (item.isHash) {
-      // Support /home#projects smoothly
-      const [path, hash] = item.to.split("#");
+    if (!item.isHash) return;
 
-      // If already on /home, just scroll
-      if (location.pathname === "/home") {
-        const el = document.getElementById(hash);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
+    const [path, hash] = item.to.split("#");
 
-      // Otherwise go to /home then scroll after navigation
-      window.location.href = `${path}#${hash}`;
+    // If already on /home, just scroll
+    if (location.pathname === "/home") {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
     }
+
+    // Otherwise navigate to /home#section
+    window.location.href = `${path}#${hash}`;
   };
 
   return (
@@ -51,7 +52,7 @@ export default function Navbar() {
           </NavLink>
         </div>
 
-        {/* Center: Links */}
+        {/* Center: Links (hidden on mobile by your CSS) */}
         <div className="nav-center">
           <ul className="nav-links">
             {navItems.map((item) => {
@@ -87,11 +88,11 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* Right: Buttons + Burger */}
+        {/* Right */}
         <div className="nav-right">
-
+          {/* ✅ Desktop only */}
           <a
-            className="nav-btn nav-btn-accent"
+            className="nav-btn nav-btn-accent hide-on-mobile"
             href="https://wa.me/917698641630"
             target="_blank"
             rel="noopener noreferrer"
@@ -128,6 +129,7 @@ export default function Navbar() {
               </a>
             );
           }
+
           return (
             <NavLink key={item.label} to={item.to} onClick={() => setOpen(false)}>
               {item.label}

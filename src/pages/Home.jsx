@@ -1,5 +1,4 @@
-import React, { useMemo, useState } from "react";
-
+import React, { useEffect, useMemo, useState } from "react";
 import profileImage from "../assets/images/profile-image.png";
 
 /* ✅ Vite glob: use query/import (fixes deprecation warning) */
@@ -74,7 +73,7 @@ function GallerySection({ id, title, subtitle, images, density = "dense" }) {
 
       {safeImages.length === 0 ? (
         <div className="placeholder-grid">
-          {Array.from({ length: 10 }).map((_, i) => (
+          {Array.from({ length: 12 }).map((_, i) => (
             <div className="img-card placeholder-card ripple-target" key={i}>
               <div className="placeholder-shine" />
               <div className="placeholder-text">Image Placeholder</div>
@@ -86,15 +85,14 @@ function GallerySection({ id, title, subtitle, images, density = "dense" }) {
           {safeImages.map((src, i) => {
             const r = ratios[src];
 
-            // If ratio unknown yet, use a nice default.
-            // Once loaded, this becomes exact, so your cards match posters/banners properly.
+            // Default aspect ratio until loaded (then exact)
             const aspectRatio =
               typeof r === "number"
                 ? `${Math.round(r * 1000) / 1000} / 1`
                 : "16 / 10";
 
             const isVeryWide = typeof r === "number" && r >= 2.1; // banners
-            const isPortrait = typeof r === "number" && r <= 0.85;
+            const isPortrait = typeof r === "number" && r <= 0.85; // vertical posters
 
             return (
               <button
@@ -130,10 +128,14 @@ function GallerySection({ id, title, subtitle, images, density = "dense" }) {
 export default function Home() {
   const base = import.meta.env.BASE_URL;
 
-  // Lightbox using event delegation (simple + fast)
+  // Lightbox
   const [lightbox, setLightbox] = useState({ open: false, src: "", alt: "" });
 
+  // ✅ Click delegation for opening lightbox
   const onMainClick = (e) => {
+    // If lightbox is open, don't re-trigger from underneath clicks
+    if (lightbox.open) return;
+
     const btn = e.target.closest?.(".img-card[data-full]");
     if (!btn) return;
 
@@ -146,11 +148,22 @@ export default function Home() {
 
   const closeLightbox = () => setLightbox({ open: false, src: "", alt: "" });
 
+  // ✅ ESC to close
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <main id="main-content" onClick={onMainClick}>
       {/* ✅ HERO */}
       <section id="hero" className="hero-wrap">
         <div className="hero-ambient" aria-hidden="true" />
+
         <div className="hero-grid">
           {/* Left Photo */}
           <div className="hero-photo">
@@ -161,13 +174,28 @@ export default function Home() {
             </div>
 
             <div className="hero-social">
-              <a href="https://www.instagram.com/smit8._/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a
+                className="ripple-target"
+                href="https://www.instagram.com/smit8._/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
                 <i className="fab fa-instagram" />
               </a>
-              <a href="https://www.twitter.com/WixStudio" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+
+              <a
+                className="ripple-target"
+                href="https://www.twitter.com/WixStudio"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+              >
                 <i className="fab fa-twitter" />
               </a>
+
               <a
+                className="ripple-target"
                 href="https://www.facebook.com/profile.php?id=100007030568764"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -175,7 +203,14 @@ export default function Home() {
               >
                 <i className="fab fa-facebook-f" />
               </a>
-              <a href="https://wa.me/917698641630" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+
+              <a
+                className="ripple-target"
+                href="https://wa.me/917698641630"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+              >
                 <i className="fab fa-whatsapp" />
               </a>
             </div>
@@ -186,11 +221,12 @@ export default function Home() {
             <h1 className="hero-title">
               <span className="hero-kicker">Designer Portfolio</span>
               <br />
-              Hey I&apos;m <span className="accent glow">Smit. </span>I&apos;m a <span className="accent glow">Designer</span>
+              Hey I&apos;m <span className="accent glow">Smit.</span> I&apos;m a{" "}
+              <span className="accent glow">Designer</span>
             </h1>
 
             <p className="hero-quote">
-              “Design is where creativity meets strategy - blending aesthetics with functionality for meaningful
+              “Design is where creativity meets strategy — blending aesthetics with functionality for meaningful
               experiences. I create visuals that feel premium, communicate clearly, and convert attention into action.”
             </p>
 
@@ -210,14 +246,25 @@ export default function Home() {
                 <li>Database: SQL, MySQL</li>
               </ul>
             </div>
+
             <div className="hero-actions">
               <a
-                className="btn btn-ghost"
+                className="btn btn-ghost ripple-target"
                 href={`${base}smit-patel-resume.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Resume
+              </a>
+
+              {/* ✅ Mobile/Tablet only */}
+              <a
+                className="btn btn-accent ripple-target btn-mobile-hire"
+                href="https://wa.me/917698641630"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Hire me
               </a>
             </div>
           </div>
@@ -225,10 +272,11 @@ export default function Home() {
       </section>
 
       {/* ✅ GALLERIES */}
+      {/* Posters: use "super" for tighter density */}
       <GallerySection
         id="projects"
         title="Posters"
-        subtitle="Banners + posters - click any to view full."
+        subtitle="Banners + posters — click any to view full."
         images={posterBannerImages}
         density="super"
       />
@@ -270,7 +318,12 @@ export default function Home() {
       {/* ✅ Lightbox */}
       {lightbox.open ? (
         <div className="lightbox" role="dialog" aria-modal="true" onClick={closeLightbox}>
-          <button className="lightbox-close" type="button" aria-label="Close preview" onClick={closeLightbox}>
+          <button
+            className="lightbox-close"
+            type="button"
+            aria-label="Close preview"
+            onClick={closeLightbox}
+          >
             ✕
           </button>
 
@@ -280,6 +333,15 @@ export default function Home() {
           </div>
         </div>
       ) : null}
+
+      <button
+        className="to-top"
+        type="button"
+        aria-label="Back to top"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        ↑
+      </button>
     </main>
   );
 }
