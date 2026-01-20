@@ -7,8 +7,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap");
 
 :root {
-  --bg0: #050505;
-  --bg1: #070707;
+  /* ✅ Matte Black */
+  --bg0: #0a0a0a;
+  --bg1: #0f0f0f;
 
   --glass: rgba(255, 255, 255, 0.06);
   --glass2: rgba(255, 255, 255, 0.10);
@@ -28,7 +29,10 @@
   --max: 1200px;
 }
 
-/* Reset-ish */
+/* =========================================================
+   RESET + BASE
+   ========================================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -46,24 +50,24 @@ body {
   color: var(--text);
   overflow-x: hidden;
 
-  /* ✅ Behance / premium gradient field */
+  /* ✅ Premium matte field (Behance-like but darker) */
   background:
-    radial-gradient(1200px 820px at 50% -12%, rgba(255, 255, 255, 0.08), transparent 58%),
-    radial-gradient(920px 680px at 14% 18%, rgba(224, 108, 108, 0.22), transparent 64%),
-    radial-gradient(980px 720px at 88% 22%, rgba(255, 255, 255, 0.08), transparent 62%),
-    radial-gradient(900px 600px at 70% 88%, rgba(224, 108, 108, 0.14), transparent 60%),
+    radial-gradient(1200px 820px at 50% -12%, rgba(255, 255, 255, 0.07), transparent 58%),
+    radial-gradient(920px 680px at 14% 18%, rgba(224, 108, 108, 0.18), transparent 64%),
+    radial-gradient(980px 720px at 88% 22%, rgba(255, 255, 255, 0.06), transparent 62%),
+    radial-gradient(900px 600px at 70% 88%, rgba(224, 108, 108, 0.12), transparent 60%),
     linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg0) 100%);
 }
 
-/* Keep root same background + add grain overlay */
+/* Keep root same background + overlays */
 #root {
   min-height: 100%;
   position: relative;
   background:
-    radial-gradient(1200px 820px at 50% -12%, rgba(255, 255, 255, 0.08), transparent 58%),
-    radial-gradient(920px 680px at 14% 18%, rgba(224, 108, 108, 0.22), transparent 64%),
-    radial-gradient(980px 720px at 88% 22%, rgba(255, 255, 255, 0.08), transparent 62%),
-    radial-gradient(900px 600px at 70% 88%, rgba(224, 108, 108, 0.14), transparent 60%),
+    radial-gradient(1200px 820px at 50% -12%, rgba(255, 255, 255, 0.07), transparent 58%),
+    radial-gradient(920px 680px at 14% 18%, rgba(224, 108, 108, 0.18), transparent 64%),
+    radial-gradient(980px 720px at 88% 22%, rgba(255, 255, 255, 0.06), transparent 62%),
+    radial-gradient(900px 600px at 70% 88%, rgba(224, 108, 108, 0.12), transparent 60%),
     linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg0) 100%);
 }
 
@@ -78,7 +82,7 @@ body {
   background:
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, rgba(0, 0, 0, 0) 1px 3px),
     repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0 1px, rgba(0, 0, 0, 0) 1px 4px);
-  opacity: 0.16;
+  opacity: 0.14;
   mix-blend-mode: overlay;
 }
 
@@ -90,8 +94,8 @@ body {
   pointer-events: none;
   z-index: 0;
 
-  background: radial-gradient(1200px 820px at 50% 35%, transparent 55%, rgba(0, 0, 0, 0.62) 100%);
-  opacity: 0.85;
+  background: radial-gradient(1200px 820px at 50% 35%, transparent 55%, rgba(0, 0, 0, 0.70) 100%);
+  opacity: 0.9;
 }
 
 .nav-shell,
@@ -131,6 +135,7 @@ img {
 /* =========================================================
    GO TO TOP BUTTON
    ========================================================= */
+
 .to-top {
   position: fixed;
   right: 18px;
@@ -148,7 +153,7 @@ img {
   place-items: center;
   cursor: pointer;
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
-  transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease;
+  transition: transform 0.18s ease, background 0.18s ease, border 0.18s ease, opacity 0.18s ease;
   z-index: 9999;
 }
 
@@ -164,14 +169,14 @@ img {
 
 .nav-shell {
   position: relative;
-  top: 18px;
+  /* ✅ not sticky */
   z-index: 9999;
   width: min(var(--max), calc(100% - 42px));
   margin: 24px auto 0;
 }
 
 .nav-inner {
-  height: 74px;
+  height: 60px;
   border-radius: 999px;
   padding: 0 18px;
   display: grid;
@@ -328,12 +333,14 @@ img {
 
 /* Burger */
 .nav-burger {
+  font-size: 32px;
+  font-weight: 500;
   display: none;
   height: 44px;
   width: 44px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  background: transparent;
   color: white;
   cursor: pointer;
   transition: 0.2s ease;
@@ -385,9 +392,33 @@ img {
   display: inline-flex;
 }
 
+/* ✅ NAVBAR — MEDIA QUERIES (kept under navbar section) */
 @media (max-width: 860px) {
   .hide-on-mobile {
     display: none !important;
+  }
+
+  .nav-inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .nav-center {
+    display: none;
+  }
+
+  /* Hide desktop Hire Me button on tablet/mobile */
+  .nav-right .nav-btn-accent {
+    display: none;
+  }
+
+  .nav-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-mobile.open {
+    display: block;
   }
 }
 
@@ -398,7 +429,7 @@ img {
 .hero-wrap {
   width: min(var(--max), calc(100% - 42px));
   margin: 26px auto 0;
-  padding: 22px 0 0;
+  padding: 24px 0 0;
   position: relative;
 }
 
@@ -440,7 +471,7 @@ img {
 }
 
 .hero-photo-frame {
-  border-radius: 80px 0px 80px 0px;
+  border-radius: 40px 0px 40px 0px;
   overflow: hidden;
   position: relative;
   background: rgba(255, 255, 255, 0.05);
@@ -605,35 +636,52 @@ img {
 }
 
 /* Mobile-only Hire Me next to Resume */
-.hero-actions .btn-mobile-hire {
-  display: none;
-}
-
-/* ✅ Force 4 columns on desktop for super grid */
-.img-grid-super {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-@media (max-width: 860px) {
-  .img-grid-super {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 520px) {
-  .img-grid-super {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ✅ Hero Hire Me button: show on tablet/mobile only */
 .btn-mobile-hire {
   display: none;
 }
 
+/* ✅ HERO — MEDIA QUERIES (kept under hero section) */
+@media (max-width: 1100px) {
+  .hero-grid {
+    grid-template-columns: 360px 1fr;
+    gap: 44px;
+  }
+
+  .hero-title {
+    font-size: 48px;
+  }
+}
+
 @media (max-width: 860px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .hero-wrap {
+  padding: 0px;
+}
+
+  .hero-photo-frame img {
+    height: 320px;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+
+  .hero-quote {
+    font-size: 18px;
+  }
+
   .btn-mobile-hire {
     display: inline-flex;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-title {
+    font-size: 34px;
   }
 }
 
@@ -685,11 +733,18 @@ img {
   line-height: 1.6;
 }
 
+/* ✅ SECTION HEADERS — MEDIA QUERIES */
+@media (max-width: 520px) {
+  .section-title {
+    font-size: 30px;
+  }
+}
+
 /* =========================================================
    GALLERY GRID + CARDS (Desktop = 4 columns max)
-   - Portrait: spans 2 rows (looks premium)
    - Banner: spans 2 columns
-   - No blank inside card: cover
+   - Portrait: spans 2 rows (premium)
+   - Behance-style lift shadow
    ========================================================= */
 
 .img-grid {
@@ -697,51 +752,76 @@ img {
   gap: 18px;
 }
 
-/* ✅ Desktop: strict 4 columns max */
 .img-grid-dense,
 .img-grid-super {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-/* Base card */
+/* Base card (✅ Behance shadow stack) */
 .img-card {
   position: relative;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   cursor: pointer;
   padding: 0;
   outline: none;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+
+  /* ✨ floating poster depth */
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.55),
+    0 28px 60px rgba(0, 0, 0, 0.65),
+    0 80px 140px rgba(0, 0, 0, 0.55);
+
   transform: translateZ(0);
   isolation: isolate;
-  transition: transform 0.18s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .img-card:active {
   transform: scale(0.99);
 }
 
+.img-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.65),
+    0 40px 90px rgba(0, 0, 0, 0.75),
+    0 120px 200px rgba(0, 0, 0, 0.65);
+}
+
+/* Rim light */
 .img-card::before {
   content: "";
   position: absolute;
   inset: -2px;
-  background: radial-gradient(520px 240px at 20% 20%, rgba(224, 108, 108, 0.14), transparent 60%);
-  opacity: 0.85;
-  filter: blur(12px);
-  z-index: 0;
+  border-radius: inherit;
   pointer-events: none;
+  z-index: 1;
+
+  background:
+    linear-gradient(180deg,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0.02));
+
+  opacity: 0.65;
+  mix-blend-mode: screen;
 }
 
+/* Image fills perfectly */
 .img-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* ✅ no blank */
   transition: transform 0.35s ease;
   position: relative;
-  z-index: 1;
+  z-index: 0;
+  /* rim is z=1 */
+}
+
+.img-card:hover img {
+  transform: scale(1.03);
 }
 
 .img-overlay {
@@ -753,6 +833,10 @@ img {
   opacity: 0;
   transition: opacity 0.35s ease;
   z-index: 2;
+}
+
+.img-card:hover .img-overlay {
+  opacity: 1;
 }
 
 .img-hoverhint {
@@ -774,32 +858,53 @@ img {
   transition: 0.25s ease;
 }
 
-.img-card:hover img {
-  transform: scale(1.03);
-}
-
-.img-card:hover .img-overlay {
-  opacity: 1;
-}
-
 .img-card:hover .img-hoverhint {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ✅ Banner: spans 2 columns on desktop */
+/* Banner: spans 2 columns on desktop */
 .img-card.is-banner {
   grid-column: span 2;
 }
 
-/* ✅ Portrait: spans 2 rows on desktop (looks premium) */
+/* Portrait: spans 2 rows on desktop (extra depth) */
 .img-card.is-portrait {
   grid-row: span 2;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.6),
+    0 40px 90px rgba(0, 0, 0, 0.7),
+    0 140px 260px rgba(0, 0, 0, 0.65);
 }
 
-/* portrait before tint */
-.img-card.is-portrait::before {
-  background: radial-gradient(520px 260px at 30% 20%, rgba(255, 255, 255, 0.10), transparent 60%);
+/* ✅ GALLERY — MEDIA QUERIES (kept under gallery section) */
+@media (max-width: 860px) {
+
+  .img-grid-dense,
+  .img-grid-super {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .img-card.is-banner {
+    grid-column: span 2;
+  }
+
+  .img-card.is-portrait {
+    grid-row: span 1;
+    /* keep mobile clean */
+  }
+}
+
+@media (max-width: 520px) {
+
+  .img-grid-dense,
+  .img-grid-super {
+    grid-template-columns: 1fr;
+  }
+
+  .img-card.is-banner {
+    grid-column: span 1;
+  }
 }
 
 /* =========================================================
@@ -845,6 +950,19 @@ img {
 
   100% {
     transform: translateX(120%);
+  }
+}
+
+/* ✅ PLACEHOLDERS — MEDIA QUERIES */
+@media (max-width: 860px) {
+  .placeholder-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .placeholder-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1019,30 +1137,8 @@ img {
   box-shadow: 0 0 18px rgba(224, 108, 108, 0.18);
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer {
-  padding: 32px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.68);
-}
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-
+/* ✅ ABOUT — MEDIA QUERIES */
 @media (max-width: 1100px) {
-  .hero-grid {
-    grid-template-columns: 360px 1fr;
-    gap: 44px;
-  }
-
-  .hero-title {
-    font-size: 48px;
-  }
-
   .about-grid {
     grid-template-columns: 1fr;
   }
@@ -1052,92 +1148,12 @@ footer {
   }
 }
 
-/* ✅ Tablet: 2 columns */
-@media (max-width: 860px) {
-  .nav-inner {
-    grid-template-columns: 1fr auto;
-  }
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
-  .nav-center {
-    display: none;
-  }
-
-  /* Hide desktop Hire Me button on mobile */
-  .nav-right .nav-btn-accent {
-    display: none;
-  }
-
-  .nav-burger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .nav-mobile.open {
-    display: block;
-  }
-
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 26px;
-  }
-
-  .hero-photo-frame img {
-    height: 460px;
-  }
-
-  .hero-title {
-    font-size: 40px;
-  }
-
-  .hero-quote {
-    font-size: 18px;
-  }
-
-  /* ✅ Mobile hero shows Hire Me next to Resume */
-  .hero-actions .btn-mobile-hire {
-    display: inline-flex;
-  }
-
-  .img-grid-dense,
-  .img-grid-super {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .img-card.is-banner {
-    grid-column: span 2;
-  }
-
-  .img-card.is-portrait {
-    grid-row: span 1;
-    /* keep mobile clean */
-  }
-
-  .placeholder-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* ✅ Small mobile: 1 column */
-@media (max-width: 520px) {
-  .hero-title {
-    font-size: 34px;
-  }
-
-  .section-title {
-    font-size: 30px;
-  }
-
-  .img-grid-dense,
-  .img-grid-super {
-    grid-template-columns: 1fr;
-  }
-
-  .img-card.is-banner {
-    grid-column: span 1;
-  }
-
-  .placeholder-grid {
-    grid-template-columns: 1fr;
-  }
+footer {
+  padding: 32px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.68);
 }
