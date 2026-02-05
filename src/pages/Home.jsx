@@ -1,39 +1,75 @@
+// src/pages/Home.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import profileImage from "../assets/images/profile-image.png";
 
-/* ✅ Vite glob: use query/import (fixes deprecation warning) */
-const adCampaignImages = Object.values(
-  import.meta.glob("../assets/images/ad-campaign-designs/*.{png,jpg,jpeg,webp}", {
+/* =========================================================
+   ✅ Helpers
+   ========================================================= */
+const sortNice = (a, b) =>
+  String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" });
+
+const uniq = (arr) => Array.from(new Set((arr || []).filter(Boolean)));
+
+/* =========================================================
+   ✅ NEW FOLDERS (based on your updated structure)
+   ========================================================= */
+
+/**
+ * Posters / Banners
+ * ✅ folder: src/assets/images/ad-campaign-designs/banners/
+ */
+const posterImages = Object.values(
+  import.meta.glob("../assets/images/banners/*.{png,jpg,jpeg,webp}", {
     eager: true,
     query: "?url",
     import: "default",
   })
 );
 
+/**
+ * Ad Campaign Designs
+ * ✅ folder:
+ *  - src/assets/images/ad-campaign-designs/*.png (root)
+ *  - src/assets/images/ad-campaign-designs/add-camp/*.jpg
+ */
+const adCampaignImages = uniq([
+  ...Object.values(
+    import.meta.glob("../assets/images/add-camp/*.{png,jpg,jpeg,webp}", {
+      eager: true,
+      query: "?url",
+      import: "default",
+    })
+  ),
+]);
+
+/**
+ * Brand & Visual Identity
+ * ✅ folder: src/assets/images/brand-and-visual-identity/
+ */
 const brandIdentityImages = Object.values(
-  import.meta.glob("../assets/images/brand-visual-identity/*.{png,jpg,jpeg,webp}", {
+  import.meta.glob("../assets/images/brand-and-visual-identity/*.{png,jpg,jpeg,webp}", {
     eager: true,
     query: "?url",
     import: "default",
   })
 );
 
-const ecommerceImages = Object.values(
-  import.meta.glob("../assets/images/ecommerce-listing-design/*.{png,jpg,jpeg,webp}", {
+/**
+ * Listing
+ * ✅ folder: src/assets/images/listing/
+ */
+const listingImages = Object.values(
+  import.meta.glob("../assets/images/listing/*.{png,jpg,jpeg,webp}", {
     eager: true,
     query: "?url",
     import: "default",
   })
 );
 
-const posterBannerImages = Object.values(
-  import.meta.glob("../assets/images/poster-banners/*.{png,jpg,jpeg,webp}", {
-    eager: true,
-    query: "?url",
-    import: "default",
-  })
-);
-
+/**
+ * Social Media
+ * ✅ folder: src/assets/images/social-media/
+ */
 const socialMediaImages = Object.values(
   import.meta.glob("../assets/images/social-media/*.{png,jpg,jpeg,webp}", {
     eager: true,
@@ -43,7 +79,7 @@ const socialMediaImages = Object.values(
 );
 
 function GallerySection({ id, title, subtitle, images, density = "dense" }) {
-  const safeImages = useMemo(() => (images?.filter(Boolean) || []).sort(), [images]);
+  const safeImages = useMemo(() => uniq(images).sort(sortNice), [images]);
 
   // Store aspect ratio per image
   const [ratios, setRatios] = useState({});
@@ -71,25 +107,18 @@ function GallerySection({ id, title, subtitle, images, density = "dense" }) {
         {subtitle ? <p className="section-subtitle">{subtitle}</p> : null}
       </div>
 
+      {/* ✅ NO placeholders (per your request) */}
       {safeImages.length === 0 ? (
-        <div className="placeholder-grid">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div className="img-card placeholder-card ripple-target" key={i}>
-              <div className="placeholder-shine" />
-              <div className="placeholder-text">Image Placeholder</div>
-            </div>
-          ))}
-        </div>
+        <p className="section-subtitle" style={{ marginTop: 16 }}>
+          No images found in this folder yet.
+        </p>
       ) : (
         <div className={`img-grid ${density === "super" ? "img-grid-super" : "img-grid-dense"}`}>
           {safeImages.map((src, i) => {
             const r = ratios[src];
 
             // Default aspect ratio until loaded (then exact)
-            const aspectRatio =
-              typeof r === "number"
-                ? `${Math.round(r * 1000) / 1000} / 1`
-                : "16 / 10";
+            const aspectRatio = typeof r === "number" ? `${Math.round(r * 1000) / 1000} / 1` : "16 / 10";
 
             const isVeryWide = typeof r === "number" && r >= 2.1; // banners
             const isPortrait = typeof r === "number" && r <= 0.85; // vertical posters
@@ -108,12 +137,7 @@ function GallerySection({ id, title, subtitle, images, density = "dense" }) {
                 style={{ aspectRatio }}
                 data-full={src}
               >
-                <img
-                  src={src}
-                  alt={`${title} ${i + 1}`}
-                  loading="lazy"
-                  onLoad={(e) => onImgLoad(src, e)}
-                />
+                <img src={src} alt={`${title} ${i + 1}`} loading="lazy" onLoad={(e) => onImgLoad(src, e)} />
                 <div className="img-overlay" />
                 <div className="img-hoverhint">View</div>
               </button>
@@ -131,9 +155,11 @@ export default function Home() {
   // Lightbox
   const [lightbox, setLightbox] = useState({ open: false, src: "", alt: "" });
 
+  // Go-top visibility
+  const [showTop, setShowTop] = useState(false);
+
   // ✅ Click delegation for opening lightbox
   const onMainClick = (e) => {
-    // If lightbox is open, don't re-trigger from underneath clicks
     if (lightbox.open) return;
 
     const btn = e.target.closest?.(".img-card[data-full]");
@@ -156,6 +182,14 @@ export default function Home() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ✅ Show go-top after scroll
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 500);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
@@ -257,7 +291,7 @@ export default function Home() {
                 Resume
               </a>
 
-              {/* ✅ Mobile/Tablet only */}
+              {/* ✅ Mobile/Tablet only (CSS controls visibility) */}
               <a
                 className="btn btn-accent ripple-target btn-mobile-hire"
                 href="https://wa.me/917698641630"
@@ -271,13 +305,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ✅ GALLERIES */}
-      {/* Posters: use "super" for tighter density */}
+      {/* ✅ GALLERIES (FINAL 5 SECTIONS) */}
       <GallerySection
         id="projects"
         title="Posters"
-        subtitle="Banners + posters — click any to view full."
-        images={posterBannerImages}
+        subtitle="Posters & banners — click any to view full."
+        images={posterImages}
         density="super"
       />
 
@@ -298,10 +331,10 @@ export default function Home() {
       />
 
       <GallerySection
-        id="ecommerce"
-        title="E-commerce Listing Design"
+        id="listing"
+        title="Listing Design"
         subtitle="Clean listing visuals and conversion-friendly layouts."
-        images={ecommerceImages}
+        images={listingImages}
         density="dense"
       />
 
@@ -318,12 +351,7 @@ export default function Home() {
       {/* ✅ Lightbox */}
       {lightbox.open ? (
         <div className="lightbox" role="dialog" aria-modal="true" onClick={closeLightbox}>
-          <button
-            className="lightbox-close"
-            type="button"
-            aria-label="Close preview"
-            onClick={closeLightbox}
-          >
+          <button className="lightbox-close" type="button" aria-label="Close preview" onClick={closeLightbox}>
             ✕
           </button>
 
@@ -334,14 +362,17 @@ export default function Home() {
         </div>
       ) : null}
 
-      <button
-        className="to-top"
-        type="button"
-        aria-label="Back to top"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      >
-        ↑
-      </button>
+      {/* ✅ Go to top (only shows after scroll) */}
+      {showTop ? (
+        <button
+          className="to-top"
+          type="button"
+          aria-label="Back to top"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          ↑
+        </button>
+      ) : null}
     </main>
   );
 }
