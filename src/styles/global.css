@@ -659,8 +659,8 @@ img {
   }
 
   .hero-wrap {
-  padding: 0px;
-}
+    padding: 0px;
+  }
 
   .hero-photo-frame img {
     height: 320px;
@@ -800,11 +800,7 @@ img {
   pointer-events: none;
   z-index: 1;
 
-  background:
-    linear-gradient(180deg,
-      rgba(255, 255, 255, 0.12),
-      rgba(255, 255, 255, 0.02));
-
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
   opacity: 0.65;
   mix-blend-mode: screen;
 }
@@ -817,7 +813,6 @@ img {
   transition: transform 0.35s ease;
   position: relative;
   z-index: 0;
-  /* rim is z=1 */
 }
 
 .img-card:hover img {
@@ -891,7 +886,6 @@ img {
 
   .img-card.is-portrait {
     grid-row: span 1;
-    /* keep mobile clean */
   }
 }
 
@@ -1156,4 +1150,213 @@ footer {
   padding: 32px;
   text-align: center;
   color: rgba(255, 255, 255, 0.68);
+}
+
+/* =========================================================
+   ✅ ADD THIS AT THE VERY END of your global.css
+   (Keeps your existing hero/gallery/lightbox styles intact,
+    only adds the PDF-style section header + custom layouts)
+   ========================================================= */
+
+/* Optional: PDF badge color (orange like your screenshots) */
+:root {
+  --pdf-badge: #ff8c3c;
+}
+
+/* ---------- PDF-style section header (title left, badge+text right) ---------- */
+.pdf-section {
+  width: min(var(--max), calc(100% - 42px));
+  margin: 85px auto 0;
+}
+
+.pdf-head {
+  display: grid;
+  grid-template-columns: 1fr 390px;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.pdf-title {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: 72px;
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
+}
+
+.pdf-meta {
+  padding-top: 10px;
+}
+
+.pdf-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  min-width: 44px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--pdf-badge);
+  color: #101010;
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+  box-shadow: 0 16px 60px rgba(0, 0, 0, 0.55);
+}
+
+.pdf-desc {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 400px;
+}
+
+.pdf-empty {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.60);
+  font-size: 14px;
+}
+
+/* ---------- Grid column helpers (used by the JSX below) ---------- */
+.img-grid.cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.img-grid.cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.img-grid.cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* ---------- Layout: POSTER & BANNERS (2x2 wide banners like PDF) ---------- */
+.img-grid.layout-banners {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* keep them clean and wide (no forced portrait spans here) */
+.img-grid.layout-banners .img-card.is-portrait {
+  grid-row: span 1;
+}
+
+.img-grid.layout-banners .img-card.is-banner {
+  grid-column: span 1;
+}
+
+/* =========================================================
+   ✅ NEW Layout: BRAND (3 images like your Canva)
+   Left: 2 logos  | Right: 1 tall palette (spans 2 rows)
+   ========================================================= */
+
+.img-grid.layout-brand3 {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr 1fr 0.9fr;
+  grid-auto-rows: 1fr;
+}
+
+/* Reset auto banner/portrait behavior for this layout */
+.img-grid.layout-brand3 .img-card.is-banner,
+.img-grid.layout-brand3 .img-card.is-portrait {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+/* 1st logo (left) */
+.img-grid.layout-brand3 .img-card:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* 2nd logo (middle) */
+.img-grid.layout-brand3 .img-card:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* 3rd palette (right, tall spanning 2 rows) */
+.img-grid.layout-brand3 .img-card:nth-child(3) {
+  grid-column: 3;
+}
+
+/* Make logos look like your identity blocks */
+.img-grid.layout-brand3 .img-card:nth-child(1),
+.img-grid.layout-brand3 .img-card:nth-child(2) {
+  aspect-ratio: 16 / 10;
+}
+
+/* Palette tall block */
+.img-grid.layout-brand3 .img-card:nth-child(3) {
+  aspect-ratio: 10 / 16;
+}
+
+/* ---------- Responsive like your PDF (desktop big, mobile smaller) ---------- */
+@media (max-width: 1100px) {
+  .pdf-head {
+    grid-template-columns: 1fr 340px;
+  }
+
+  .pdf-title {
+    font-size: 72px;
+  }
+}
+
+@media (max-width: 860px) {
+  .pdf-head {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pdf-title {
+    font-size: 40px;
+  }
+
+  /* collapse 4/3/2 into 2 cols on tablet */
+  .img-grid.cols-4,
+  .img-grid.cols-3,
+  .img-grid.cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* brand3 becomes 2-col and palette goes full width */
+  .img-grid.layout-brand3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .img-grid.layout-brand3 .img-card:nth-child(3) {
+    grid-column: 1 / -1;
+    grid-row: auto;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 520px) {
+  .pdf-title {
+    font-size: 32px;
+  }
+
+  /* single column on mobile */
+  .img-grid.cols-4,
+  .img-grid.cols-3,
+  .img-grid.cols-2,
+  .img-grid.layout-banners,
+  .img-grid.layout-brand3 {
+    grid-template-columns: 1fr;
+  }
+
+  .img-grid.layout-brand3 .img-card:nth-child(1),
+  .img-grid.layout-brand3 .img-card:nth-child(2),
+  .img-grid.layout-brand3 .img-card:nth-child(3) {
+    grid-column: auto;
+    grid-row: auto;
+    aspect-ratio: 16 / 10;
+  }
 }
