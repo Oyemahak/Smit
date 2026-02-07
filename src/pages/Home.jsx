@@ -1,4 +1,5 @@
 // ✅ FINAL Home.jsx (fixes BRAND section overlap + keeps everything else same)
+// ✅ FIX: Works on deployed site too (handles uppercase file extensions + keeps glob literals)
 // src/pages/Home.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import profileImage from "../assets/images/profile-image.png";
@@ -13,11 +14,13 @@ const uniq = (arr) => Array.from(new Set((arr || []).filter(Boolean)));
 
 /* =========================================================
    ✅ FOLDERS (your final structure)
+   ✅ IMPORTANT: import.meta.glob() must use STRING LITERALS (no variables)
+   ✅ IMPORTANT: include UPPERCASE extensions for deployed environments (Linux case-sensitive)
    ========================================================= */
 
 /** 03 — POSTER & BANNERS ✅ folder: src/assets/images/banners/ */
 const posterImages = Object.values(
-  import.meta.glob("../assets/images/banners/*.{png,jpg,jpeg,webp}", {
+  import.meta.glob("../assets/images/banners/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
     eager: true,
     query: "?url",
     import: "default",
@@ -27,7 +30,7 @@ const posterImages = Object.values(
 /** 01 — AD CAMPAIGN DESIGNS ✅ folder: src/assets/images/add-camp/ */
 const adCampaignImages = uniq([
   ...Object.values(
-    import.meta.glob("../assets/images/add-camp/*.{png,jpg,jpeg,webp}", {
+    import.meta.glob("../assets/images/add-camp/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
       eager: true,
       query: "?url",
       import: "default",
@@ -37,7 +40,7 @@ const adCampaignImages = uniq([
 
 /** 05 — BRAND & VISUAL IDENTITY ✅ folder: src/assets/images/brand-and-visual-identity/ */
 const brandIdentityImages = Object.values(
-  import.meta.glob("../assets/images/brand-and-visual-identity/*.{png,jpg,jpeg,webp}", {
+  import.meta.glob("../assets/images/brand-and-visual-identity/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
     eager: true,
     query: "?url",
     import: "default",
@@ -46,7 +49,7 @@ const brandIdentityImages = Object.values(
 
 /** 04 — E-COMMERCE LISTING DESIGN ✅ folder: src/assets/images/listing/ */
 const listingImages = Object.values(
-  import.meta.glob("../assets/images/listing/*.{png,jpg,jpeg,webp}", {
+  import.meta.glob("../assets/images/listing/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
     eager: true,
     query: "?url",
     import: "default",
@@ -55,7 +58,7 @@ const listingImages = Object.values(
 
 /** 02 — SOCIAL MEDIA ✅ folder: src/assets/images/social-media/ */
 const socialMediaImages = Object.values(
-  import.meta.glob("../assets/images/social-media/*.{png,jpg,jpeg,webp}", {
+  import.meta.glob("../assets/images/social-media/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
     eager: true,
     query: "?url",
     import: "default",
@@ -118,7 +121,12 @@ function GallerySection({ id, number, title, description, images, colsDesktop = 
             return (
               <button
                 key={src + i}
-                className={["img-card", "ripple-target", isVeryWide ? "is-banner" : "", isPortrait ? "is-portrait" : ""]
+                className={[
+                  "img-card",
+                  "ripple-target",
+                  isVeryWide ? "is-banner" : "",
+                  isPortrait ? "is-portrait" : "",
+                ]
                   .filter(Boolean)
                   .join(" ")}
                 type="button"
@@ -126,12 +134,7 @@ function GallerySection({ id, number, title, description, images, colsDesktop = 
                 style={{ aspectRatio }}
                 data-full={src}
               >
-                <img
-                  src={src}
-                  alt={`${title} ${i + 1}`}
-                  loading="lazy"
-                  onLoad={(e) => onImgLoad(src, e)}
-                />
+                <img src={src} alt={`${title} ${i + 1}`} loading="lazy" onLoad={(e) => onImgLoad(src, e)} />
                 <div className="img-overlay" />
                 <div className="img-hoverhint">View</div>
               </button>
