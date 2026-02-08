@@ -1,19 +1,7 @@
 {
   "rewrites": [
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": ".*"
-        }
-      ],
-      "missing": [
-        { "type": "file" },
-        { "type": "directory" }
-      ],
-      "destination": "/"
-    }
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/(.*)", "destination": "/" }
   ],
   "cleanUrls": true,
   "trailingSlash": false
