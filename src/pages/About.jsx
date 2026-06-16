@@ -9,9 +9,7 @@ export default function About() {
       <section className="about-page">
         <div className="about-page-copy" data-reveal>
           <span className="eyebrow">About</span>
-          <h1>
-            Smit Patel is a graphic designer focused on posters, brand visuals, and digital campaigns.
-          </h1>
+          <h1>Meet Smit Patel.</h1>
           <p>
             He creates visuals that feel bold, polished, and useful across social media, web, advertising, and print.
             His style leans into clear hierarchy, cinematic contrast, careful typography, and memorable campaign
@@ -23,7 +21,7 @@ export default function About() {
           </p>
           <div className="about-actions">
             <a className="btn btn-accent" href={whatsappHref} target="_blank" rel="noopener noreferrer">
-              Let’s work together
+              Let's work together
             </a>
             <a className="btn btn-ghost" href="/#work">
               View Projects
