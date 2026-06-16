@@ -9,7 +9,6 @@ import {
   FaInstagram,
   FaLayerGroup,
   FaLightbulb,
-  FaLinkedinIn,
   FaMagic,
   FaPaintBrush,
   FaPalette,
@@ -59,7 +58,7 @@ const iconMap = {
 export default function IconBadge({ name, className = "" }) {
   const Icon = iconMap[name] || FaPalette;
   return (
-    <span className={`icon-badge ${className}`.trim()} aria-hidden="true">
+    <span className={`icon-badge icon-${name} ${className}`.trim()} aria-hidden="true">
       <Icon />
     </span>
   );
