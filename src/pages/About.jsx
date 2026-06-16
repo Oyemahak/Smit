@@ -3,22 +3,41 @@ import IconBadge from "../components/IconBadge";
 import aboutImage from "../assets/images/about-image.png";
 import { processSteps, skillGroups, whatsappHref } from "../data/site";
 
+const aboutStats = [
+  { value: "24", label: "selected visuals" },
+  { value: "6", label: "creative categories" },
+  { value: "Print + Digital", label: "delivery focus" },
+];
+
+const whatIDo = [
+  { title: "Posters", icon: "poster", text: "Bold layouts for launches, events, and offers." },
+  { title: "Brand Visuals", icon: "brand", text: "Color, typography, and identity direction." },
+  { title: "Social Creatives", icon: "social", text: "Feed-ready designs that are easy to scan." },
+];
+
+const designBadges = ["Photoshop", "Illustrator", "Figma", "Canva"];
+
 export default function About() {
   return (
     <main id="main-content">
       <section className="about-page">
         <div className="about-page-copy" data-reveal>
-          <span className="eyebrow">About</span>
-          <h1>Meet Smit Patel.</h1>
+          <span className="eyebrow">About Smit</span>
+          <h1>Graphic designer with a sharp eye for bold visual stories.</h1>
           <p>
-            He creates visuals that feel bold, polished, and useful across social media, web, advertising, and print.
-            His style leans into clear hierarchy, cinematic contrast, careful typography, and memorable campaign
-            compositions.
+            Smit creates poster systems, brand visuals, social creatives, and campaign artwork that feels clean,
+            confident, and ready to use.
           </p>
-          <p>
-            The portfolio highlights poster systems, social creatives, product layouts, identity-led visuals, and
-            campaign artwork designed to stand out without becoming messy.
-          </p>
+
+          <div className="about-stat-grid" aria-label="Portfolio quick stats">
+            {aboutStats.map((stat) => (
+              <div className="about-stat" key={stat.label}>
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </div>
+            ))}
+          </div>
+
           <div className="about-actions">
             <a className="btn btn-accent" href={whatsappHref} target="_blank" rel="noopener noreferrer">
               Let's work together
@@ -31,42 +50,59 @@ export default function About() {
 
         <div className="about-page-photo" data-reveal>
           <img src={aboutImage} alt="Portrait of Smit Patel, graphic designer" loading="eager" decoding="async" />
+          <div className="about-tool-float" aria-hidden="true">
+            <IconBadge name="photoshop" />
+            <IconBadge name="illustrator" />
+            <IconBadge name="figma" />
+          </div>
           <div className="about-photo-label">
             <strong>Smit Patel</strong>
-            <span>Graphic Designer</span>
+            <span>Posters, branding, social visuals</span>
           </div>
         </div>
+      </section>
+
+      <section className="section about-do-grid">
+        {whatIDo.map((item) => (
+          <article className="glass-panel about-do-card" key={item.title} data-reveal>
+            <IconBadge name={item.icon} />
+            <h2>{item.title}</h2>
+            <p>{item.text}</p>
+          </article>
+        ))}
       </section>
 
       <section className="section about-detail-grid">
         <article className="glass-panel" data-reveal>
           <h2>Design Focus</h2>
-          <p>
-            Poster design, brand identity, social media creatives, typography-led layouts, campaign visuals, and
-            print/digital design systems.
-          </p>
+          <p>Posters, identity visuals, social campaigns, layout systems, and print-ready artwork.</p>
         </article>
         <article className="glass-panel" data-reveal>
-          <h2>Personality</h2>
-          <p>
-            Bold, detail-focused, visual-first, and practical about making designs work for real campaigns and fast
-            digital browsing.
-          </p>
+          <h2>Style</h2>
+          <p>Bold, clean, high-contrast, and built around clear hierarchy.</p>
         </article>
         <article className="glass-panel" data-reveal>
           <h2>Tools</h2>
-          <p>Photoshop, Illustrator, Figma, Canva, layout systems, color theory, typography, and visual storytelling.</p>
+          <div className="about-tool-list">
+            {designBadges.map((tool) => (
+              <span key={tool}>{tool}</span>
+            ))}
+          </div>
         </article>
       </section>
 
       <section className="section skills-section">
         <div className="section-heading" data-reveal>
-          <span>Highlights</span>
+          <span>Toolkit</span>
           <h2>Skills and creative strengths</h2>
         </div>
         <div className="skill-groups">
           {skillGroups.map((group) => (
-            <article className="skill-group-card" key={group.title} data-reveal>
+            <article
+              className={`skill-group-card skill-group-${group.accent || "default"}${group.featured ? " skill-group-featured" : ""}`}
+              key={group.title}
+              data-reveal
+            >
               <h3>{group.title}</h3>
               <div className="skill-item-grid">
                 {group.items.map((item) => (

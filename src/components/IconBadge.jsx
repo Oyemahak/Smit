@@ -1,12 +1,9 @@
 import React from "react";
 import {
   FaBullhorn,
-  FaEnvelope,
   FaGem,
-  FaGithub,
   FaGlobe,
   FaImages,
-  FaInstagram,
   FaLayerGroup,
   FaLightbulb,
   FaLinkedinIn,
@@ -26,8 +23,11 @@ import {
   SiElementor,
   SiFigma,
   SiGit,
+  SiGithub,
+  SiGmail,
   SiGoogleanalytics,
   SiHtml5,
+  SiInstagram,
   SiJavascript,
   SiMongodb,
   SiNodedotjs,
@@ -42,9 +42,9 @@ import { TbBrandAdobeXd } from "react-icons/tb";
 function PhotoshopLogo() {
   return (
     <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
-      <rect x="3" y="3" width="26" height="26" rx="6" fill="#001e36" />
-      <rect x="4.5" y="4.5" width="23" height="23" rx="4.5" fill="none" stroke="#31a8ff" strokeWidth="1.8" />
-      <text x="8" y="21.5" fill="#31a8ff" fontFamily="Arial, Helvetica, sans-serif" fontSize="11" fontWeight="800">
+      <rect x="2.5" y="2.5" width="27" height="27" rx="7" fill="#001e36" />
+      <rect x="4" y="4" width="24" height="24" rx="5.5" fill="none" stroke="#31a8ff" strokeWidth="2" />
+      <text x="7.5" y="21.8" fill="#31a8ff" fontFamily="Arial, Helvetica, sans-serif" fontSize="11.4" fontWeight="800">
         Ps
       </text>
     </svg>
@@ -54,9 +54,9 @@ function PhotoshopLogo() {
 function IllustratorLogo() {
   return (
     <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
-      <rect x="3" y="3" width="26" height="26" rx="6" fill="#330000" />
-      <rect x="4.5" y="4.5" width="23" height="23" rx="4.5" fill="none" stroke="#ff9a00" strokeWidth="1.8" />
-      <text x="9" y="21.5" fill="#ff9a00" fontFamily="Arial, Helvetica, sans-serif" fontSize="11" fontWeight="800">
+      <rect x="2.5" y="2.5" width="27" height="27" rx="7" fill="#330000" />
+      <rect x="4" y="4" width="24" height="24" rx="5.5" fill="none" stroke="#ff9a00" strokeWidth="2" />
+      <text x="8.8" y="21.8" fill="#ff9a00" fontFamily="Arial, Helvetica, sans-serif" fontSize="11.4" fontWeight="800">
         Ai
       </text>
     </svg>
@@ -75,7 +75,7 @@ const iconMap = {
   wordpress: SiWordpress,
   elementor: SiElementor,
   git: SiGit,
-  github: FaGithub,
+  github: SiGithub,
   seo: FaSearch,
   analytics: SiGoogleanalytics,
   node: SiNodedotjs,
@@ -85,10 +85,10 @@ const iconMap = {
   illustrator: IllustratorLogo,
   figma: SiFigma,
   canva: SiCanva,
-  instagram: FaInstagram,
+  instagram: SiInstagram,
   whatsapp: FaWhatsapp,
   linkedin: FaLinkedinIn,
-  email: FaEnvelope,
+  email: SiGmail,
   portfolio: FaGlobe,
   graphic: FaPalette,
   poster: FaImages,

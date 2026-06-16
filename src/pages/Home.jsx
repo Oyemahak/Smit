@@ -146,8 +146,8 @@ export default function Home() {
           <p className="eyebrow">Graphic Designer Portfolio</p>
           <h1>Smit Patel — Graphic Designer</h1>
           <p className="hero-lede">
-            Creative visuals for brands, campaigns, and social media. Explore selected posters, brand visuals, campaign
-            artwork, and digital designs built with clean layout, strong color, and clear storytelling.
+            Posters, brand visuals, social creatives, and campaign artwork shaped with clean layout, strong color, and
+            clear storytelling.
           </p>
 
           <div className="hero-highlights" aria-label="Design focus">
@@ -209,7 +209,7 @@ export default function Home() {
 
       <section className="section work-section" id="work">
         <SectionHeading eyebrow="Selected Work" title="Portfolio Highlights">
-          Browse selected poster designs, brand visuals, social media creatives, campaign artwork, and layout systems.
+          Selected posters, brand visuals, social creatives, campaigns, and layout systems.
         </SectionHeading>
 
         <div className="filter-bar" aria-label="Filter selected work" data-reveal>
@@ -262,7 +262,7 @@ export default function Home() {
 
       <section className="section services-section" id="services">
         <SectionHeading eyebrow="Services" title="Creative Services">
-          Clean, useful visual assets for campaigns, launches, events, social media, and print.
+          Visual assets for launches, events, campaigns, social media, and print.
         </SectionHeading>
         <div className="service-grid">
           {services.map((service, index) => (
@@ -277,7 +277,7 @@ export default function Home() {
 
       <section className="section process-section" id="process">
         <SectionHeading eyebrow="Process" title="How I Design">
-          A clean design workflow that moves from visual direction to final delivery without losing detail.
+          A simple workflow from direction to final files.
         </SectionHeading>
         <div className="process-grid">
           {processSteps.map((step, index) => (
@@ -306,8 +306,8 @@ export default function Home() {
           <span className="eyebrow">About Smit</span>
           <h2>Clean visual design with a practical, campaign-ready eye.</h2>
           <p>
-            Smit designs poster systems, brand visuals, product layouts, and social content with a clean sense of
-            hierarchy. His work is crafted to be bold, readable, and ready for real digital or print use.
+            Smit designs posters, brand visuals, layouts, and social content built to be bold, readable, and ready for
+            real use.
           </p>
           <div className="about-highlights">
             <span>Poster design</span>
@@ -326,8 +326,7 @@ export default function Home() {
           <span className="eyebrow">Contact</span>
           <h2>Let’s create something bold.</h2>
           <p>
-            Need posters, brand visuals, social media creatives, campaign graphics, or print-ready designs? Start the
-            conversation on WhatsApp and share the design goal.
+            Need posters, brand visuals, social creatives, or print-ready designs? Start the conversation on WhatsApp.
           </p>
         </div>
         <div className="contact-actions">
