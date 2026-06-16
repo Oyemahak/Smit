@@ -1,58 +1,60 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+import { whatsappHref } from "../data/site";
 
-export default function Navbar() {
+export default function Navbar({ theme, onToggleTheme }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = useMemo(
     () => [
-      { label: "Projects", to: "/home#projects", isHash: true },
-      { label: "Home", to: "/home" },
+      { label: "Work", to: "/#work", isHash: true },
+      { label: "Services", to: "/#services", isHash: true },
+      { label: "Process", to: "/#process", isHash: true },
       { label: "About", to: "/about" },
     ],
     []
   );
 
-  // ✅ close menu whenever route changes
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
   const handleNavClick = (item) => {
     setOpen(false);
-
     if (!item.isHash) return;
 
     const [path, hash] = item.to.split("#");
 
-    // If already on /home, just scroll
-    if (location.pathname === "/home") {
+    const scrollToSection = () => {
       const el = document.getElementById(hash);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    if (location.pathname === path) {
+      scrollToSection();
       return;
     }
 
-    // Otherwise navigate to /home#section
-    window.location.href = `${path}#${hash}`;
+    navigate(path);
+    window.setTimeout(scrollToSection, 120);
   };
 
   return (
     <header className="nav-shell">
       <nav className="nav-inner" aria-label="Primary navigation">
-        {/* Left: Brand */}
         <div className="nav-left">
-          <NavLink className="nav-brand" to="/home" onClick={() => setOpen(false)}>
+          <Link className="nav-brand" to="/" onClick={() => setOpen(false)}>
             <img className="nav-logo" src={logo} alt="Smit Patel logo" />
             <div className="nav-brand-text">
-              <div className="nav-brand-top">Portfolio</div>
-              <div className="nav-brand-sub">SMIT PATEL</div>
+              <span className="nav-brand-top">Smit Patel</span>
+              <span className="nav-brand-sub">Graphic Designer</span>
             </div>
-          </NavLink>
+          </Link>
         </div>
 
-        {/* Center: Links (hidden on mobile by your CSS) */}
         <div className="nav-center">
           <ul className="nav-links">
             {navItems.map((item) => {
@@ -88,12 +90,19 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* Right */}
         <div className="nav-right">
-          {/* ✅ Desktop only */}
+          <button
+            className="theme-toggle"
+            type="button"
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            onClick={onToggleTheme}
+          >
+            <span aria-hidden="true">{theme === "dark" ? "☾" : "☀"}</span>
+          </button>
+
           <a
             className="nav-btn nav-btn-accent hide-on-mobile"
-            href="https://wa.me/917698641630"
+            href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -103,16 +112,16 @@ export default function Navbar() {
           <button
             className="nav-burger"
             type="button"
-            aria-label="Open menu"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
-            ☰
+            <span />
+            <span />
           </button>
         </div>
       </nav>
 
-      {/* Mobile Dropdown */}
       <div className={`nav-mobile ${open ? "open" : ""}`}>
         {navItems.map((item) => {
           if (item.isHash) {
@@ -136,6 +145,9 @@ export default function Navbar() {
             </NavLink>
           );
         })}
+        <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+          Hire me
+        </a>
       </div>
     </header>
   );

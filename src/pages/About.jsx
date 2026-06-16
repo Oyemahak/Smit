@@ -1,75 +1,91 @@
 import React from "react";
-import profileImage from "../assets/images/about-image.png";
+import aboutImage from "../assets/images/about-image.png";
+import { processSteps, skills, whatsappHref } from "../data/site";
 
 export default function About() {
   return (
     <main id="main-content">
-      <section className="about-wrap">
-        <div className="about-head">
-          <div className="section-title-row">
-            <span className="section-star">✶</span>
-            <h1 className="section-title">About</h1>
-            <span className="section-star">✶</span>
-          </div>
-          <p className="section-subtitle">
-            A quick look at my background, tools, and the kind of work I love creating.
+      <section className="about-page">
+        <div className="about-page-copy" data-reveal>
+          <span className="eyebrow">About</span>
+          <h1>
+            Smit Patel is a graphic designer focused on posters, brand visuals, and digital campaigns.
+          </h1>
+          <p>
+            He creates visuals that feel bold, polished, and useful across social media, web, advertising, and print.
+            His style leans into clear hierarchy, cinematic contrast, careful typography, and memorable campaign
+            compositions.
           </p>
-        </div>
-
-        <div className="about-grid">
-          <div className="about-photo">
-            <div className="about-photo-frame">
-              <img src={profileImage} alt="Smit Patel" />
-              <div className="about-photo-fade" />
-            </div>
-          </div>
-
-          <div className="about-copy">
-            <h2 className="about-title">
-              Hi, I&apos;m <span className="accent glow">Smit Patel</span>.
-            </h2>
-
-            <p className="about-text">
-              I’m a designer focused on clean visuals, strong typography, and modern layouts. I enjoy creating posters,
-              campaign creatives, brand assets, and web-ready designs that look premium and communicate clearly.
-            </p>
-
-            <div className="about-tools-card">
-              <div className="about-tools-label">Core Tools</div>
-              <div className="about-tools-list">
-                Figma • Photoshop • Illustrator • Canva • WordPress • Wix Studio
-              </div>
-            </div>
-
-            <div className="about-actions">
-              <a
-                className="btn btn-accent"
-                href="https://wa.me/917698641630"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Let’s work together
-              </a>
-
-              <a className="btn btn-ghost" href="/home#projects">
-                View Projects
-              </a>
-            </div>
-
-            <div className="about-notes">
-              <div className="about-note">
-                <span className="about-dot" />
-                Posters, banners, and ads are designed to be “scroll-stopping” but still clean & readable.
-              </div>
-              <div className="about-note">
-                <span className="about-dot" />
-                I prefer glassy UI, subtle gradients, and crisp typography for premium brand feel.
-              </div>
-            </div>
+          <p>
+            The portfolio highlights poster systems, social creatives, product layouts, identity-led visuals, and
+            campaign artwork designed to stand out without becoming messy.
+          </p>
+          <div className="about-actions">
+            <a className="btn btn-accent" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              Let’s work together
+            </a>
+            <a className="btn btn-ghost" href="/#work">
+              View Projects
+            </a>
           </div>
         </div>
 
-        <div className="separator" />
+        <div className="about-page-photo" data-reveal>
+          <img src={aboutImage} alt="Portrait of Smit Patel, graphic designer" loading="eager" decoding="async" />
+          <div className="about-photo-label">
+            <strong>Smit Patel</strong>
+            <span>Graphic Designer</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="section about-detail-grid">
+        <article className="glass-panel" data-reveal>
+          <h2>Design Focus</h2>
+          <p>
+            Poster design, brand identity, social media creatives, typography-led layouts, campaign visuals, and
+            print/digital design systems.
+          </p>
+        </article>
+        <article className="glass-panel" data-reveal>
+          <h2>Personality</h2>
+          <p>
+            Bold, detail-focused, visual-first, and practical about making designs work for real campaigns and fast
+            digital browsing.
+          </p>
+        </article>
+        <article className="glass-panel" data-reveal>
+          <h2>Tools</h2>
+          <p>Photoshop, Illustrator, Figma, Canva, layout systems, color theory, typography, and visual storytelling.</p>
+        </article>
+      </section>
+
+      <section className="section skills-section">
+        <div className="section-heading" data-reveal>
+          <span>Highlights</span>
+          <h2>Skills and creative strengths</h2>
+        </div>
+        <div className="skills-grid" data-reveal>
+          {skills.map((skill) => (
+            <span key={skill}>{skill}</span>
+          ))}
+        </div>
+      </section>
+
+      <section className="section process-section">
+        <div className="section-heading" data-reveal>
+          <span>Workflow</span>
+          <h2>How future projects move</h2>
+        </div>
+        <div className="process-grid">
+          {processSteps.map((step) => (
+            <article className="process-card" key={step.title} data-reveal>
+              <span>{step.step}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </article>
+          ))}
+        </div>
       </section>
     </main>
   );

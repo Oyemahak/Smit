@@ -1,373 +1,278 @@
-// ✅ FINAL Home.jsx (fixes BRAND section overlap + keeps everything else same)
-// ✅ FIX: Works on deployed site too (handles uppercase file extensions + keeps glob literals)
-// src/pages/Home.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import profileImage from "../assets/images/profile-image.png";
+import { featuredItems, filters, portfolioItems } from "../data/portfolio";
+import { processSteps, services, skills, socials, whatsappHref } from "../data/site";
 
-/* =========================================================
-   ✅ Helpers
-   ========================================================= */
-const sortNice = (a, b) =>
-  String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" });
+function useRevealOnScroll() {
+  useEffect(() => {
+    const items = document.querySelectorAll("[data-reveal]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
 
-const uniq = (arr) => Array.from(new Set((arr || []).filter(Boolean)));
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+}
 
-/* =========================================================
-   ✅ FOLDERS (your final structure)
-   ✅ IMPORTANT: import.meta.glob() must use STRING LITERALS (no variables)
-   ✅ IMPORTANT: include UPPERCASE extensions for deployed environments (Linux case-sensitive)
-   ========================================================= */
-
-/** 03 — POSTER & BANNERS ✅ folder: src/assets/images/banners/ */
-const posterImages = Object.values(
-  import.meta.glob("../assets/images/banners/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
-    eager: true,
-    query: "?url",
-    import: "default",
-  })
-);
-
-/** 01 — AD CAMPAIGN DESIGNS ✅ folder: src/assets/images/add-camp/ */
-const adCampaignImages = uniq([
-  ...Object.values(
-    import.meta.glob("../assets/images/add-camp/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
-      eager: true,
-      query: "?url",
-      import: "default",
-    })
-  ),
-]);
-
-/** 05 — BRAND & VISUAL IDENTITY ✅ folder: src/assets/images/brand-and-visual-identity/ */
-const brandIdentityImages = Object.values(
-  import.meta.glob("../assets/images/brand-and-visual-identity/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
-    eager: true,
-    query: "?url",
-    import: "default",
-  })
-);
-
-/** 04 — E-COMMERCE LISTING DESIGN ✅ folder: src/assets/images/listing/ */
-const listingImages = Object.values(
-  import.meta.glob("../assets/images/listing/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
-    eager: true,
-    query: "?url",
-    import: "default",
-  })
-);
-
-/** 02 — SOCIAL MEDIA ✅ folder: src/assets/images/social-media/ */
-const socialMediaImages = Object.values(
-  import.meta.glob("../assets/images/social-media/*.{png,PNG,jpg,JPG,jpeg,JPEG,webp,WEBP,gif,GIF,svg,SVG}", {
-    eager: true,
-    query: "?url",
-    import: "default",
-  })
-);
-
-/* =========================================================
-   ✅ Gallery Section (PDF header + grid layouts)
-   ========================================================= */
-function GallerySection({ id, number, title, description, images, colsDesktop = 4, layoutClass = "" }) {
-  const safeImages = useMemo(() => uniq(images).sort(sortNice), [images]);
-  const [ratios, setRatios] = useState({});
-
-  const onImgLoad = (src, e) => {
-    const img = e.currentTarget;
-    const w = img.naturalWidth || 1;
-    const h = img.naturalHeight || 1;
-    const ratio = w / h;
-
-    setRatios((prev) => {
-      if (prev[src]) return prev;
-      return { ...prev, [src]: ratio };
-    });
-  };
-
+function SectionHeading({ eyebrow, title, children }) {
   return (
-    <section id={id} className="pdf-section">
-      {/* ✅ PDF-style header */}
-      <div className="pdf-head">
-        <h2 className="pdf-title">{title}</h2>
+    <div className="section-heading" data-reveal>
+      <span>{eyebrow}</span>
+      <h2>{title}</h2>
+      {children ? <p>{children}</p> : null}
+    </div>
+  );
+}
 
-        <div className="pdf-meta">
-          <span className="pdf-badge">{number}</span>
-          <p className="pdf-desc">{description}</p>
-        </div>
+function PortfolioCard({ item, index, onOpen }) {
+  return (
+    <button
+      className={`work-card work-card-${item.shape}`}
+      type="button"
+      aria-label={`Open ${item.title}`}
+      onClick={() => onOpen(item)}
+      data-reveal
+      style={{ "--delay": `${Math.min(index * 45, 360)}ms` }}
+    >
+      <img src={item.src} alt={item.alt} loading={index < 4 ? "eager" : "lazy"} decoding="async" />
+      <span className="work-card-glass" />
+      <div className="work-card-copy">
+        <span>{item.category}</span>
+        <h3>{item.title}</h3>
+        <p>{item.description}</p>
       </div>
-
-      {/* ✅ NO placeholders */}
-      {safeImages.length === 0 ? (
-        <p className="pdf-empty">No images found in this folder yet.</p>
-      ) : (
-        <div className={`img-grid cols-${colsDesktop} ${layoutClass}`}>
-          {safeImages.map((src, i) => {
-            const r = ratios[src];
-
-            // ✅ IMPORTANT FIX:
-            // Disable banner/portrait auto-spans for special "manual layout" sections
-            // so BRAND (layout-brand3) never overlaps.
-            const isFixedLayout =
-              String(layoutClass || "").includes("layout-brand3") ||
-              String(layoutClass || "").includes("layout-brand") ||
-              String(layoutClass || "").includes("layout-banners");
-
-            const aspectRatio =
-              typeof r === "number" ? `${Math.round(r * 1000) / 1000} / 1` : "16 / 10";
-
-            const isVeryWide = !isFixedLayout && typeof r === "number" && r >= 2.1;
-            const isPortrait = !isFixedLayout && typeof r === "number" && r <= 0.85;
-
-            return (
-              <button
-                key={src + i}
-                className={[
-                  "img-card",
-                  "ripple-target",
-                  isVeryWide ? "is-banner" : "",
-                  isPortrait ? "is-portrait" : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                type="button"
-                aria-label={`${title} image ${i + 1}`}
-                style={{ aspectRatio }}
-                data-full={src}
-              >
-                <img src={src} alt={`${title} ${i + 1}`} loading="lazy" onLoad={(e) => onImgLoad(src, e)} />
-                <div className="img-overlay" />
-                <div className="img-hoverhint">View</div>
-              </button>
-            );
-          })}
-        </div>
-      )}
-    </section>
+    </button>
   );
 }
 
 export default function Home() {
-  const base = import.meta.env.BASE_URL;
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [selectedWork, setSelectedWork] = useState(null);
 
-  const [lightbox, setLightbox] = useState({ open: false, src: "", alt: "" });
-  const [showTop, setShowTop] = useState(false);
-
-  const onMainClick = (e) => {
-    if (lightbox.open) return;
-
-    const btn = e.target.closest?.(".img-card[data-full]");
-    if (!btn) return;
-
-    const src = btn.getAttribute("data-full");
-    const img = btn.querySelector("img");
-    const alt = img?.getAttribute("alt") || "Preview";
-
-    setLightbox({ open: true, src, alt });
-  };
-
-  const closeLightbox = () => setLightbox({ open: false, src: "", alt: "" });
+  useRevealOnScroll();
 
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "Escape") closeLightbox();
+    if (!window.location.hash) return;
+    const id = window.location.hash.slice(1);
+    window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 160);
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setSelectedWork(null);
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 500);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const visibleItems = useMemo(() => {
+    if (activeFilter === "All") return portfolioItems;
+    return portfolioItems.filter((item) => item.category === activeFilter);
+  }, [activeFilter]);
 
   return (
-    <main id="main-content" onClick={onMainClick}>
-      {/* ✅ HERO (unchanged) */}
-      <section id="hero" className="hero-wrap">
-        <div className="hero-ambient" aria-hidden="true" />
+    <main id="main-content">
+      <section className="hero-section">
+        <div className="hero-background" aria-hidden="true">
+          <span className="hero-line hero-line-one" />
+          <span className="hero-line hero-line-two" />
+          <span className="hero-shape hero-shape-one" />
+          <span className="hero-shape hero-shape-two" />
+        </div>
 
-        <div className="hero-grid">
-          <div className="hero-photo">
-            <div className="hero-photo-frame">
-              <img src={profileImage} alt="Smit Patel" />
-              <div className="hero-photo-fade" />
-              <div className="hero-photo-shine" />
-            </div>
+        <div className="hero-content" data-reveal>
+          <p className="eyebrow">Designer portfolio — posters, campaigns, brand identity, and social visuals.</p>
+          <h1>Smit Patel, Graphic Designer.</h1>
+          <p className="hero-lede">
+            Graphic Designer focused on posters, brand visuals, social media creatives, campaign artwork, and digital
+            layouts that stand out, connect, and convert.
+          </p>
 
-            <div className="hero-social">
-              <a
-                className="ripple-target"
-                href="https://www.instagram.com/smit8._/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-              >
-                <i className="fab fa-instagram" />
-              </a>
-
-              <a
-                className="ripple-target"
-                href="https://www.twitter.com/WixStudio"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter"
-              >
-                <i className="fab fa-twitter" />
-              </a>
-
-              <a
-                className="ripple-target"
-                href="https://www.facebook.com/profile.php?id=100007030568764"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-              >
-                <i className="fab fa-facebook-f" />
-              </a>
-
-              <a
-                className="ripple-target"
-                href="https://wa.me/917698641630"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-              >
-                <i className="fab fa-whatsapp" />
-              </a>
-            </div>
+          <div className="hero-actions">
+            <a className="btn btn-accent" href="#work">
+              Explore Work
+            </a>
+            <a className="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              Hire Me
+            </a>
           </div>
 
-          <div className="hero-copy">
-            <h1 className="hero-title">
-              <span className="hero-kicker">Designer Portfolio</span>
-              <br />
-              Hey I&apos;m <span className="accent glow">Smit.</span> I&apos;m a{" "}
-              <span className="accent glow">Designer</span>
-            </h1>
-
-            <p className="hero-quote">
-              “Design is where creativity meets strategy — blending aesthetics with functionality for meaningful
-              experiences. I create visuals that feel premium, communicate clearly, and convert attention into action.”
-            </p>
-
-            <div className="hero-skills">
-              <h3 className="hero-subhead">Skills &amp; Abilities</h3>
-
-              <p className="hero-skill-line">
-                <span className="accent">Design Tools:</span> Photoshop, Premiere Pro, Lightroom, WordPress, Canva, Wix
-                Studio.
-              </p>
-
-              <ul className="hero-bullets">
-                <li>Time Management &amp; Problem Solving</li>
-                <li>Customer Service</li>
-                <li>Project Coordination</li>
-                <li>Technical Troubleshooting</li>
-                <li>Database: SQL, MySQL</li>
-              </ul>
+          <div className="hero-stats" aria-label="Portfolio highlights">
+            <div>
+              <strong>6</strong>
+              <span>Creative categories</span>
             </div>
-
-            <div className="hero-actions">
-              <a
-                className="btn btn-ghost ripple-target"
-                href={`${base}smit-patel-resume.pdf`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Resume
-              </a>
-
-              <a
-                className="btn btn-accent ripple-target btn-mobile-hire"
-                href="https://wa.me/917698641630"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Hire me
-              </a>
+            <div>
+              <strong>24</strong>
+              <span>Selected visuals</span>
+            </div>
+            <div>
+              <strong>Web + Print</strong>
+              <span>Delivery-ready files</span>
             </div>
           </div>
+        </div>
+
+        <div className="hero-showcase" aria-label="Featured portfolio previews" data-reveal>
+          {featuredItems.map((item, index) => (
+            <button
+              className={`preview-card preview-card-${index + 1}`}
+              key={item.title}
+              type="button"
+              onClick={() => setSelectedWork(item)}
+            >
+              <img src={item.src} alt={item.alt} decoding="async" />
+              <span>{item.category}</span>
+            </button>
+          ))}
+          <div className="tool-chip chip-one">Photoshop</div>
+          <div className="tool-chip chip-two">Typography</div>
+          <div className="tool-chip chip-three">Campaigns</div>
         </div>
       </section>
 
-      {/* ✅ PDF ORDER */}
-      <GallerySection
-        id="ads"
-        number="01"
-        title="AD CAMPAIGN DESIGNS"
-        description="Strategic ad visuals built to tell a story, grab attention, and drive action. From concept to final artwork, every campaign is designed to maximize reach and brand recall."
-        images={adCampaignImages}
-        colsDesktop={3}
-      />
+      <section className="section about-preview" id="about-preview">
+        <div className="about-preview-photo" data-reveal>
+          <img src={profileImage} alt="Smit Patel graphic designer portrait" loading="lazy" decoding="async" />
+        </div>
+        <div className="about-preview-copy" data-reveal>
+          <span className="eyebrow">About Smit</span>
+          <h2>Premium visual design with a practical, campaign-ready eye.</h2>
+          <p>
+            Smit designs poster systems, brand visuals, product layouts, and social content with a clean sense of
+            hierarchy. His work is crafted for attention first, then clarity, then conversion.
+          </p>
+          <div className="about-highlights">
+            <span>Poster design</span>
+            <span>Brand systems</span>
+            <span>Digital campaigns</span>
+            <span>Print-ready files</span>
+          </div>
+          <a className="btn btn-ghost" href="/about">
+            More About Smit
+          </a>
+        </div>
+      </section>
 
-      <GallerySection
-        id="social"
-        number="02"
-        title="SOCIAL MEDIA"
-        description="I design social media creatives that blend strong visuals with clear messaging. Each poster is thoughtfully crafted to catch attention, reflect the brand’s identity, and stand out naturally in a fast-moving social feed."
-        images={socialMediaImages}
-        colsDesktop={4}
-      />
+      <section className="section work-section" id="work">
+        <SectionHeading eyebrow="Selected Work" title="Portfolio built for fast browsing and deep viewing">
+          Explore poster designs, brand identity visuals, social media creatives, campaign artwork, and structured
+          layout systems from the updated asset collection.
+        </SectionHeading>
 
-      <GallerySection
-        id="posters"
-        number="03"
-        title="POSTER & BANNERS"
-        description="I design social media creatives that blend strong visuals with clear messaging. Each poster is thoughtfully crafted to catch attention, reflect the brand’s identity, and stand out naturally in a fast-moving social feed."
-        images={posterImages}
-        colsDesktop={2}
-        layoutClass="layout-banners"
-      />
+        <div className="filter-bar" aria-label="Filter selected work" data-reveal>
+          {filters.map((filter) => (
+            <button
+              className={activeFilter === filter ? "active" : ""}
+              key={filter}
+              type="button"
+              onClick={() => setActiveFilter(filter)}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
 
-      <GallerySection
-        id="listing"
-        number="04"
-        title="E-COMMERCE LISTING DESIGN"
-        description="Each e-commerce listing is thoughtfully designed to present product details clearly, enhance visual appeal, and help customers make confident buying decisions."
-        images={listingImages}
-        colsDesktop={2}
-      />
+        <div className="work-grid">
+          {visibleItems.map((item, index) => (
+            <PortfolioCard key={item.title} item={item} index={index} onOpen={setSelectedWork} />
+          ))}
+        </div>
+      </section>
 
-      {/* ✅ BRAND (manual layout) */}
-      <GallerySection
-        id="brand"
-        number="05"
-        title="BRAND & VISUAL IDENTITY"
-        description="I design strong and cohesive brand and visual identities that clearly communicate values, build recognition, and create lasting impressions."
-        images={brandIdentityImages}
-        colsDesktop={3}
-        layoutClass="layout-brand3"
-      />
+      <section className="section skills-section" id="skills">
+        <SectionHeading eyebrow="Skills & Tools" title="Design capabilities for modern brands">
+          A focused mix of tools, visual craft, and platform-ready production skills.
+        </SectionHeading>
+        <div className="skills-grid" data-reveal>
+          {skills.map((skill) => (
+            <span key={skill}>{skill}</span>
+          ))}
+        </div>
+      </section>
 
-      <div className="separator" />
+      <section className="section services-section" id="services">
+        <SectionHeading eyebrow="Services" title="Creative assets designed to stand out">
+          From campaign posters to polished brand systems, every visual is shaped for clarity and impact.
+        </SectionHeading>
+        <div className="service-grid">
+          {services.map((service, index) => (
+            <article className="service-card" key={service.title} data-reveal style={{ "--delay": `${index * 45}ms` }}>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-      {/* ✅ Lightbox */}
-      {lightbox.open ? (
-        <div className="lightbox" role="dialog" aria-modal="true" onClick={closeLightbox}>
-          <button className="lightbox-close" type="button" aria-label="Close preview" onClick={closeLightbox}>
-            ✕
-          </button>
+      <section className="section process-section" id="process">
+        <SectionHeading eyebrow="Process" title="Simple process, polished results">
+          A clean design workflow that moves from visual direction to final delivery without losing detail.
+        </SectionHeading>
+        <div className="process-grid">
+          {processSteps.map((step, index) => (
+            <article className="process-card" key={step.title} data-reveal style={{ "--delay": `${index * 70}ms` }}>
+              <span>{step.step}</span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-          <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
-            <img className="lightbox-img" src={lightbox.src} alt={lightbox.alt} />
-            <div className="lightbox-hint">Press ESC or click outside to close</div>
+      <section className="section contact-section" id="contact" data-reveal>
+        <div>
+          <span className="eyebrow">Contact</span>
+          <h2>Let’s create something bold.</h2>
+          <p>
+            Need posters, brand visuals, social media creatives, campaign graphics, or print-ready designs? Start the
+            conversation on WhatsApp and share the design goal.
+          </p>
+        </div>
+        <div className="contact-actions">
+          <a className="btn btn-accent" href={whatsappHref} target="_blank" rel="noopener noreferrer">
+            Hire Me on WhatsApp
+          </a>
+          <a className="btn btn-ghost" href="#work">
+            View My Work
+          </a>
+        </div>
+        <div className="social-links" aria-label="Social links">
+          {socials.map((social) => (
+            <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
+              {social.label}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {selectedWork ? (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={selectedWork.title}>
+          <button className="lightbox-backdrop" type="button" aria-label="Close preview" onClick={() => setSelectedWork(null)} />
+          <div className="lightbox-panel">
+            <button className="lightbox-close" type="button" aria-label="Close preview" onClick={() => setSelectedWork(null)}>
+              ×
+            </button>
+            <img src={selectedWork.src} alt={selectedWork.alt} />
+            <div className="lightbox-copy">
+              <span>{selectedWork.category}</span>
+              <h2>{selectedWork.title}</h2>
+              <p>{selectedWork.description}</p>
+            </div>
           </div>
         </div>
-      ) : null}
-
-      {/* ✅ Go to top */}
-      {showTop ? (
-        <button
-          className="to-top"
-          type="button"
-          aria-label="Back to top"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
-          ↑
-        </button>
       ) : null}
     </main>
   );

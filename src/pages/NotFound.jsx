@@ -16,7 +16,7 @@ export default function NotFound() {
 
         <div style={{ textAlign: "center", marginTop: 20 }}>
           <Link className="btn btn-accent" to="/home">
-            Back to Home
+            Back to Portfolio
           </Link>
         </div>
       </section>

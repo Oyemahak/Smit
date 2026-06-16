@@ -4,10 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 
 import "./styles/global.css";
-import "./styles/trash.css";
-
-// ✅ Run small DOM interactions (menu + ripple)
-import "./js/main.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

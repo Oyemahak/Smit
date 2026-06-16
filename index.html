@@ -3,29 +3,83 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smit Patel - Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smit Patel | Graphic Designer Portfolio</title>
+  <meta
+    name="description"
+    content="Explore the graphic design portfolio of Smit Patel, featuring poster designs, brand identity, social media creatives, campaign visuals, and digital artwork."
+  />
+  <meta
+    name="keywords"
+    content="Smit Patel graphic designer, graphic designer portfolio, poster design, brand identity design, social media creatives, campaign design, visual designer, digital designer"
+  />
+  <link rel="canonical" href="https://www.patelsmit.in/" />
   <link rel="icon" type="image/png" href="/logo.png" />
 
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Smit Patel | Graphic Designer Portfolio" />
+  <meta
+    property="og:description"
+    content="Explore poster designs, brand identity, social media creatives, campaign visuals, and digital artwork by Smit Patel."
+  />
+  <meta property="og:url" content="https://www.patelsmit.in/" />
+  <meta property="og:image" content="https://www.patelsmit.in/logo.png" />
+  <meta property="og:site_name" content="Smit Patel Portfolio" />
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Smit Patel | Graphic Designer Portfolio" />
+  <meta
+    name="twitter:description"
+    content="Poster designs, brand identity, social media creatives, campaign visuals, and digital artwork by Smit Patel."
+  />
+  <meta name="twitter:image" content="https://www.patelsmit.in/logo.png" />
 
-  <!-- 🪄 Fix Theme Flash -->
   <script>
-    const savedTheme = localStorage.getItem('portfolio-theme') || 'rain';
-    document.body.className = `${savedTheme}-theme`;
+    const savedTheme = localStorage.getItem("portfolio-theme") || "dark";
+    document.documentElement.dataset.theme = savedTheme;
+  </script>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://www.patelsmit.in/#smit-patel",
+          "name": "Smit Patel",
+          "url": "https://www.patelsmit.in/",
+          "jobTitle": "Graphic Designer",
+          "sameAs": [
+            "https://www.instagram.com/smit8._/",
+            "https://www.facebook.com/profile.php?id=100007030568764"
+          ],
+          "knowsAbout": [
+            "Poster Design",
+            "Brand Identity",
+            "Social Media Design",
+            "Campaign Visual Design",
+            "Typography",
+            "Layout Design"
+          ]
+        },
+        {
+          "@type": "CreativeWork",
+          "@id": "https://www.patelsmit.in/#portfolio",
+          "name": "Smit Patel Graphic Designer Portfolio",
+          "creator": {
+            "@id": "https://www.patelsmit.in/#smit-patel"
+          },
+          "url": "https://www.patelsmit.in/",
+          "description": "A graphic design portfolio featuring poster designs, brand identity, social media creatives, campaign visuals, and digital artwork."
+        }
+      ]
+    }
   </script>
 </head>
 
 <body>
   <div id="root"></div>
-
-  <!-- Only load Vite React entry point -->
-  <script type="module" src="./src/main.jsx"></script>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 
 </html>

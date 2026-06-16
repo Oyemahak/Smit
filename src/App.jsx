@@ -1,41 +1,42 @@
-import React from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 
-import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
-  const location = useLocation();
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return "dark";
+    return localStorage.getItem("portfolio-theme") || "dark";
+  });
 
-  // Hide navbar/footer on landing if you want the landing to feel like an intro screen
-  const isLanding = location.pathname === "/" || location.pathname === "/landing";
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.body.classList.remove("light-theme", "dark-theme");
+    document.body.classList.add(`${theme}-theme`);
+    localStorage.setItem("portfolio-theme", theme);
+  }, [theme]);
 
   return (
     <>
       <ScrollToTop />
-      {!isLanding ? <Navbar /> : null}
+      <Navbar theme={theme} onToggleTheme={() => setTheme((value) => (value === "dark" ? "light" : "dark"))} />
 
       <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/landing" element={<Landing />} />
-
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
-
-        {/* Optional: redirect old hash routes */}
-        <Route path="/home#projects" element={<Navigate to="/home" replace />} />
-
+        <Route path="/landing" element={<Navigate to="/" replace />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {!isLanding ? <Footer /> : null}
+      <Footer />
     </>
   );
 }
