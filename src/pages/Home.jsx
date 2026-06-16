@@ -5,11 +5,11 @@ import { featuredItems, filters, portfolioItems } from "../data/portfolio";
 import { processSteps, services, skillGroups, socials, whatsappHref } from "../data/site";
 
 const heroHighlights = [
-  { label: "Graphic Design", icon: "graphic" },
-  { label: "Posters", icon: "poster" },
-  { label: "Branding", icon: "brand" },
-  { label: "Social Media Creatives", icon: "social" },
-  { label: "Campaign Visuals", icon: "campaign" },
+  { label: "Graphic Design", icon: "graphic", symbol: "✦" },
+  { label: "Posters", icon: "poster", symbol: "▣" },
+  { label: "Branding", icon: "brand", symbol: "◆" },
+  { label: "Social Media Creatives", icon: "social", symbol: "↗" },
+  { label: "Campaign Visuals", icon: "campaign", symbol: "◉" },
 ];
 
 function useRevealOnScroll(dependencies = []) {
@@ -132,8 +132,8 @@ export default function Home() {
 
           <div className="hero-highlights" aria-label="Design focus">
             {heroHighlights.map((item) => (
-              <span key={item.label}>
-                <IconBadge name={item.icon} />
+              <span className={`hero-chip hero-chip-${item.icon}`} key={item.label}>
+                <b aria-hidden="true">{item.symbol}</b>
                 {item.label}
               </span>
             ))}
