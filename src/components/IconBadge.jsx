@@ -9,6 +9,7 @@ import {
   FaInstagram,
   FaLayerGroup,
   FaLightbulb,
+  FaLinkedinIn,
   FaMagic,
   FaPaintBrush,
   FaPalette,
