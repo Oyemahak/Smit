@@ -5,7 +5,9 @@ import {
   FaDribbble,
   FaEnvelope,
   FaFacebookF,
+  FaGem,
   FaGithub,
+  FaImages,
   FaInstagram,
   FaLayerGroup,
   FaLightbulb,
@@ -15,18 +17,15 @@ import {
   FaPalette,
   FaPenNib,
   FaPrint,
-  FaRegEye,
   FaSearch,
   FaShareAlt,
-  FaVectorSquare,
   FaWhatsapp,
 } from "react-icons/fa";
-import { SiCanva, SiFigma } from "react-icons/si";
-import { TbBrandAdobeIllustrator, TbBrandAdobePhotoshop } from "react-icons/tb";
+import { SiAdobeillustrator, SiAdobephotoshop, SiCanva, SiFigma } from "react-icons/si";
 
 const iconMap = {
-  photoshop: TbBrandAdobePhotoshop,
-  illustrator: TbBrandAdobeIllustrator,
+  photoshop: SiAdobephotoshop,
+  illustrator: SiAdobeillustrator,
   figma: SiFigma,
   canva: SiCanva,
   instagram: FaInstagram,
@@ -37,9 +36,9 @@ const iconMap = {
   dribbble: FaDribbble,
   github: FaGithub,
   email: FaEnvelope,
-  graphic: FaPaintBrush,
-  poster: FaRegEye,
-  brand: FaVectorSquare,
+  graphic: FaPalette,
+  poster: FaImages,
+  brand: FaGem,
   social: FaShareAlt,
   campaign: FaBullhorn,
   typography: FaPenNib,
@@ -47,13 +46,14 @@ const iconMap = {
   color: FaPalette,
   story: FaLightbulb,
   print: FaPrint,
-  logo: FaVectorSquare,
-  event: FaRegEye,
+  logo: FaGem,
+  event: FaImages,
   ad: FaBullhorn,
   discover: FaSearch,
   concept: FaLightbulb,
   design: FaMagic,
   deliver: FaPrint,
+  brush: FaPaintBrush,
 };
 
 export default function IconBadge({ name, className = "" }) {
