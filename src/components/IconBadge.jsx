@@ -37,7 +37,31 @@ import {
   SiVite,
   SiWordpress,
 } from "react-icons/si";
-import { TbBrandAdobeIllustrator, TbBrandAdobePhotoshop, TbBrandAdobeXd } from "react-icons/tb";
+import { TbBrandAdobeXd } from "react-icons/tb";
+
+function PhotoshopLogo() {
+  return (
+    <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="6" fill="#001e36" />
+      <rect x="4.5" y="4.5" width="23" height="23" rx="4.5" fill="none" stroke="#31a8ff" strokeWidth="1.8" />
+      <text x="8" y="21.5" fill="#31a8ff" fontFamily="Arial, Helvetica, sans-serif" fontSize="11" fontWeight="800">
+        Ps
+      </text>
+    </svg>
+  );
+}
+
+function IllustratorLogo() {
+  return (
+    <svg viewBox="0 0 32 32" role="img" aria-hidden="true">
+      <rect x="3" y="3" width="26" height="26" rx="6" fill="#330000" />
+      <rect x="4.5" y="4.5" width="23" height="23" rx="4.5" fill="none" stroke="#ff9a00" strokeWidth="1.8" />
+      <text x="9" y="21.5" fill="#ff9a00" fontFamily="Arial, Helvetica, sans-serif" fontSize="11" fontWeight="800">
+        Ai
+      </text>
+    </svg>
+  );
+}
 
 const iconMap = {
   html: SiHtml5,
@@ -57,8 +81,8 @@ const iconMap = {
   node: SiNodedotjs,
   mongodb: SiMongodb,
   xd: TbBrandAdobeXd,
-  photoshop: TbBrandAdobePhotoshop,
-  illustrator: TbBrandAdobeIllustrator,
+  photoshop: PhotoshopLogo,
+  illustrator: IllustratorLogo,
   figma: SiFigma,
   canva: SiCanva,
   instagram: FaInstagram,

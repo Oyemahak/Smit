@@ -135,6 +135,12 @@ export default function Home() {
     <main id="main-content">
       <section className="hero-section">
         <div className="hero-background" aria-hidden="true" />
+        <div className="hero-orbit" aria-hidden="true">
+          <span><IconBadge name="photoshop" /></span>
+          <span><IconBadge name="illustrator" /></span>
+          <span><IconBadge name="figma" /></span>
+          <span><IconBadge name="canva" /></span>
+        </div>
 
         <div className="hero-content" data-reveal>
           <p className="eyebrow">Graphic Designer Portfolio</p>
@@ -228,11 +234,15 @@ export default function Home() {
 
       <section className="section skills-section" id="skills">
         <SectionHeading eyebrow="Skills & Tools" title="Design Skills & Tools">
-          Organized digital, CMS, design, and workflow skills employers and clients can understand quickly.
+          A focused toolkit for polished poster systems, social creatives, brand visuals, and clean digital delivery.
         </SectionHeading>
         <div className="skill-groups">
           {skillGroups.map((group) => (
-            <article className="skill-group-card" key={group.title} data-reveal>
+            <article
+              className={`skill-group-card skill-group-${group.accent || "default"}${group.featured ? " skill-group-featured" : ""}`}
+              key={group.title}
+              data-reveal
+            >
               <h3>{group.title}</h3>
               <div className="skill-item-grid">
                 {group.items.map((item) => (

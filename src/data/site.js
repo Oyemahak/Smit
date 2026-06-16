@@ -37,45 +37,50 @@ export const socialPlaceholders = {
 
 export const skillGroups = [
   {
-    title: "Front-End",
+    title: "Design Tools",
+    accent: "design",
+    featured: true,
     items: [
-      { label: "HTML5", icon: "html", description: "Semantic page structure" },
-      { label: "CSS3", icon: "css", description: "Responsive styling systems" },
-      { label: "JavaScript", icon: "javascript", description: "Interactive front-end behavior" },
-      { label: "TypeScript", icon: "typescript", description: "Typed, safer interfaces" },
-      { label: "React", icon: "react", description: "Component-based UI builds" },
-      { label: "Vite", icon: "vite", description: "Fast modern tooling" },
-      { label: "Tailwind", icon: "tailwind", description: "Utility-first UI systems" },
-      { label: "Bootstrap", icon: "bootstrap", description: "Reliable responsive layouts" },
+      { label: "Adobe Photoshop", icon: "photoshop", description: "Image editing, poster compositing, campaign polish" },
+      { label: "Adobe Illustrator", icon: "illustrator", description: "Vector graphics, logos, identity elements" },
+      { label: "Figma", icon: "figma", description: "Presentation layouts, UI boards, visual systems" },
+      { label: "Canva", icon: "canva", description: "Fast campaign variations and social-ready formats" },
     ],
   },
   {
-    title: "CMS",
+    title: "Visual Skills",
+    accent: "visual",
     items: [
+      { label: "Poster Design", icon: "poster", description: "Bold event and campaign layouts" },
+      { label: "Brand Identity", icon: "brand", description: "Color, type, and visual direction" },
+      { label: "Social Media Design", icon: "social", description: "Feed-ready creatives and ad posts" },
+      { label: "Typography", icon: "typography", description: "Readable hierarchy and type pairing" },
+      { label: "Layout Design", icon: "layout", description: "Clean composition and spacing" },
+      { label: "Color Theory", icon: "color", description: "Balanced, high-impact palettes" },
+    ],
+  },
+  {
+    title: "Digital Stack",
+    accent: "digital",
+    items: [
+      { label: "HTML5", icon: "html", description: "Semantic landing page structure" },
+      { label: "CSS3", icon: "css", description: "Responsive styling and motion polish" },
+      { label: "JavaScript", icon: "javascript", description: "Interactive front-end behavior" },
+      { label: "React", icon: "react", description: "Component-based portfolio builds" },
+      { label: "Vite", icon: "vite", description: "Fast modern build tooling" },
+      { label: "Tailwind", icon: "tailwind", description: "Utility-first UI systems" },
+    ],
+  },
+  {
+    title: "Workflow",
+    accent: "workflow",
+    items: [
+      { label: "TypeScript", icon: "typescript", description: "Typed interface handoff" },
+      { label: "Bootstrap", icon: "bootstrap", description: "Reliable responsive layouts" },
       { label: "WordPress", icon: "wordpress", description: "Editable marketing websites" },
       { label: "Elementor", icon: "elementor", description: "Visual CMS page building" },
-    ],
-  },
-  {
-    title: "Design",
-    items: [
-      { label: "Figma", icon: "figma", description: "Interface layouts and prototypes" },
-      { label: "Adobe XD", icon: "xd", description: "UX flows and screen design" },
-      { label: "UI Design", icon: "design", description: "Polished visual systems" },
-      { label: "UX Design", icon: "layout", description: "Clear user journeys" },
-      { label: "Photoshop", icon: "photoshop", description: "Image editing and campaign visuals" },
-      { label: "Illustrator", icon: "illustrator", description: "Vector graphics and identity work" },
-    ],
-  },
-  {
-    title: "Tools",
-    items: [
-      { label: "Git", icon: "git", description: "Version-controlled workflow" },
+      { label: "Git", icon: "git", description: "Version-controlled edits" },
       { label: "GitHub", icon: "github", description: "Code and project hosting" },
-      { label: "SEO", icon: "seo", description: "Search-friendly page structure" },
-      { label: "Google Analytics", icon: "analytics", description: "Performance and audience insight" },
-      { label: "Node.js", icon: "node", description: "JavaScript runtime tooling" },
-      { label: "MongoDB", icon: "mongodb", description: "Document database basics" },
     ],
   },
 ];
