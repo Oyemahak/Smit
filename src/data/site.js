@@ -17,58 +17,81 @@ export const seo = {
 };
 
 export const socials = [
-  { label: "Instagram", href: "https://www.instagram.com/smit8._/" },
-  { label: "Facebook", href: "https://www.facebook.com/profile.php?id=100007030568764" },
-  { label: "WhatsApp", href: whatsappHref },
+  { label: "Instagram", icon: "IG", tone: "instagram", href: "https://www.instagram.com/smit8._/" },
+  { label: "Facebook", icon: "f", tone: "facebook", href: "https://www.facebook.com/profile.php?id=100007030568764" },
+  { label: "WhatsApp", icon: "WA", tone: "whatsapp", href: whatsappHref },
 ];
 
-export const skills = [
-  "Photoshop",
-  "Illustrator",
-  "Figma",
-  "Canva",
-  "Poster Design",
-  "Brand Identity",
-  "Social Media Design",
-  "Typography",
-  "Layout Design",
-  "Color Theory",
-  "Campaign Design",
-  "Visual Storytelling",
-  "Print & Digital Design",
+export const skillGroups = [
+  {
+    title: "Design Tools",
+    items: [
+      { label: "Adobe Photoshop", icon: "Ps", description: "Image editing, compositing, posters" },
+      { label: "Adobe Illustrator", icon: "Ai", description: "Vector graphics, logo ideas, layouts" },
+      { label: "Figma", icon: "Fi", description: "Visual systems and clean presentation" },
+      { label: "Canva", icon: "Ca", description: "Fast social and campaign variations" },
+    ],
+  },
+  {
+    title: "Design Skills",
+    items: [
+      { label: "Poster Design", icon: "Po", description: "Bold event and campaign layouts" },
+      { label: "Brand Identity", icon: "BI", description: "Color, type, and visual direction" },
+      { label: "Social Media Design", icon: "SM", description: "Feed-ready creatives and ad posts" },
+      { label: "Typography", icon: "Ty", description: "Readable hierarchy and type pairing" },
+      { label: "Layout Design", icon: "Ly", description: "Clean composition and spacing" },
+      { label: "Color Theory", icon: "Co", description: "Balanced, high-impact palettes" },
+    ],
+  },
+  {
+    title: "Creative Services",
+    items: [
+      { label: "Campaign Design", icon: "Cd", description: "Launch visuals and marketing assets" },
+      { label: "Visual Storytelling", icon: "Vs", description: "Clear ideas through strong visuals" },
+      { label: "Print & Digital Design", icon: "Pr", description: "Files prepared for screen and print" },
+    ],
+  },
 ];
 
 export const services = [
   {
     title: "Poster Design",
+    icon: "Po",
     description: "Bold event, fashion, sale, and announcement posters built around strong hierarchy.",
   },
   {
     title: "Social Media Creatives",
+    icon: "SM",
     description: "Scroll-ready campaign posts, stories, reels covers, and launch visuals.",
   },
   {
     title: "Brand Identity",
+    icon: "BI",
     description: "Visual systems, mood, typography, colors, and branded creative direction.",
   },
   {
     title: "Logo Design",
+    icon: "Lo",
     description: "Clean logo and identity concepts for modern digital-first brands.",
   },
   {
     title: "Marketing Campaign Visuals",
+    icon: "Mk",
     description: "Conversion-focused graphics for offers, promotions, drops, and launches.",
   },
   {
     title: "Event Posters",
+    icon: "Ev",
     description: "High-impact compositions for music, fashion, cultural, and community events.",
   },
   {
     title: "Digital Ads",
+    icon: "Ad",
     description: "Premium static ad creatives sized for paid and organic digital channels.",
   },
   {
     title: "Print-ready Designs",
+    icon: "Pr",
     description: "Sharp layouts prepared for banners, catalog visuals, flyers, and print output.",
   },
 ];

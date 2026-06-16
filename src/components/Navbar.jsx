@@ -10,9 +10,9 @@ export default function Navbar({ theme, onToggleTheme }) {
 
   const navItems = useMemo(
     () => [
-      { label: "Work", to: "/#work", isHash: true },
-      { label: "Services", to: "/#services", isHash: true },
-      { label: "Process", to: "/#process", isHash: true },
+      { label: "Work", to: "/portfolio#work", isHash: true },
+      { label: "Skills", to: "/portfolio#skills", isHash: true },
+      { label: "Services", to: "/portfolio#services", isHash: true },
       { label: "About", to: "/about" },
     ],
     []
@@ -63,7 +63,7 @@ export default function Navbar({ theme, onToggleTheme }) {
                   <li key={item.label}>
                     <a
                       href={item.to}
-                      className={location.pathname === "/home" ? "active" : ""}
+                      className={location.pathname === "/portfolio" || location.pathname === "/home" ? "active" : ""}
                       onClick={(e) => {
                         e.preventDefault();
                         handleNavClick(item);
@@ -123,6 +123,15 @@ export default function Navbar({ theme, onToggleTheme }) {
       </nav>
 
       <div className={`nav-mobile ${open ? "open" : ""}`}>
+        <button
+          className="mobile-theme-row"
+          type="button"
+          onClick={onToggleTheme}
+          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+        >
+          <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
+          <strong>{theme === "dark" ? "☀" : "☾"}</strong>
+        </button>
         {navItems.map((item) => {
           if (item.isHash) {
             return (
@@ -145,7 +154,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             </NavLink>
           );
         })}
-        <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+        <a className="mobile-hire-link" href={whatsappHref} target="_blank" rel="noopener noreferrer">
           Hire me
         </a>
       </div>

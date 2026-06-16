@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 
+import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
@@ -28,7 +29,8 @@ export default function App() {
       <Navbar theme={theme} onToggleTheme={() => setTheme((value) => (value === "dark" ? "light" : "dark"))} />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="/portfolio" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/landing" element={<Navigate to="/" replace />} />

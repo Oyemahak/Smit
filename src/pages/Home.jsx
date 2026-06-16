@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import profileImage from "../assets/images/profile-image.png";
 import { featuredItems, filters, portfolioItems } from "../data/portfolio";
-import { processSteps, services, skills, socials, whatsappHref } from "../data/site";
+import { processSteps, services, skillGroups, socials, whatsappHref } from "../data/site";
 
 function useRevealOnScroll() {
   useEffect(() => {
@@ -84,19 +84,14 @@ export default function Home() {
   return (
     <main id="main-content">
       <section className="hero-section">
-        <div className="hero-background" aria-hidden="true">
-          <span className="hero-line hero-line-one" />
-          <span className="hero-line hero-line-two" />
-          <span className="hero-shape hero-shape-one" />
-          <span className="hero-shape hero-shape-two" />
-        </div>
+        <div className="hero-background" aria-hidden="true" />
 
         <div className="hero-content" data-reveal>
-          <p className="eyebrow">Designer portfolio — posters, campaigns, brand identity, and social visuals.</p>
-          <h1>Smit Patel, Graphic Designer.</h1>
+          <p className="eyebrow">Portfolio Home</p>
+          <h1>Designing Visuals That Stand Out</h1>
           <p className="hero-lede">
-            Graphic Designer focused on posters, brand visuals, social media creatives, campaign artwork, and digital
-            layouts that stand out, connect, and convert.
+            Graphic designer creating posters, brand visuals, social media creatives, and campaign artwork with clean
+            layout, strong color, and clear storytelling.
           </p>
 
           <div className="hero-actions">
@@ -136,39 +131,12 @@ export default function Home() {
               <span>{item.category}</span>
             </button>
           ))}
-          <div className="tool-chip chip-one">Photoshop</div>
-          <div className="tool-chip chip-two">Typography</div>
-          <div className="tool-chip chip-three">Campaigns</div>
-        </div>
-      </section>
-
-      <section className="section about-preview" id="about-preview">
-        <div className="about-preview-photo" data-reveal>
-          <img src={profileImage} alt="Smit Patel graphic designer portrait" loading="lazy" decoding="async" />
-        </div>
-        <div className="about-preview-copy" data-reveal>
-          <span className="eyebrow">About Smit</span>
-          <h2>Premium visual design with a practical, campaign-ready eye.</h2>
-          <p>
-            Smit designs poster systems, brand visuals, product layouts, and social content with a clean sense of
-            hierarchy. His work is crafted for attention first, then clarity, then conversion.
-          </p>
-          <div className="about-highlights">
-            <span>Poster design</span>
-            <span>Brand systems</span>
-            <span>Digital campaigns</span>
-            <span>Print-ready files</span>
-          </div>
-          <a className="btn btn-ghost" href="/about">
-            More About Smit
-          </a>
         </div>
       </section>
 
       <section className="section work-section" id="work">
-        <SectionHeading eyebrow="Selected Work" title="Portfolio built for fast browsing and deep viewing">
-          Explore poster designs, brand identity visuals, social media creatives, campaign artwork, and structured
-          layout systems from the updated asset collection.
+        <SectionHeading eyebrow="Selected Work" title="Portfolio Highlights">
+          Browse selected poster designs, brand visuals, social media creatives, campaign artwork, and layout systems.
         </SectionHeading>
 
         <div className="filter-bar" aria-label="Filter selected work" data-reveal>
@@ -192,24 +160,37 @@ export default function Home() {
       </section>
 
       <section className="section skills-section" id="skills">
-        <SectionHeading eyebrow="Skills & Tools" title="Design capabilities for modern brands">
-          A focused mix of tools, visual craft, and platform-ready production skills.
+        <SectionHeading eyebrow="Skills & Tools" title="Design Skills & Tools">
+          Organized tools and creative strengths employers and clients can understand quickly.
         </SectionHeading>
-        <div className="skills-grid" data-reveal>
-          {skills.map((skill) => (
-            <span key={skill}>{skill}</span>
+        <div className="skill-groups">
+          {skillGroups.map((group) => (
+            <article className="skill-group-card" key={group.title} data-reveal>
+              <h3>{group.title}</h3>
+              <div className="skill-item-grid">
+                {group.items.map((item) => (
+                  <div className="skill-item" key={item.label}>
+                    <span className="skill-icon">{item.icon}</span>
+                    <div>
+                      <strong>{item.label}</strong>
+                      <p>{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
           ))}
         </div>
       </section>
 
       <section className="section services-section" id="services">
-        <SectionHeading eyebrow="Services" title="Creative assets designed to stand out">
-          From campaign posters to polished brand systems, every visual is shaped for clarity and impact.
+        <SectionHeading eyebrow="Services" title="Creative Services">
+          Clean, useful visual assets for campaigns, launches, events, social media, and print.
         </SectionHeading>
         <div className="service-grid">
           {services.map((service, index) => (
             <article className="service-card" key={service.title} data-reveal style={{ "--delay": `${index * 45}ms` }}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
+              <span>{service.icon}</span>
               <h3>{service.title}</h3>
               <p>{service.description}</p>
             </article>
@@ -218,7 +199,7 @@ export default function Home() {
       </section>
 
       <section className="section process-section" id="process">
-        <SectionHeading eyebrow="Process" title="Simple process, polished results">
+        <SectionHeading eyebrow="Process" title="How I Design">
           A clean design workflow that moves from visual direction to final delivery without losing detail.
         </SectionHeading>
         <div className="process-grid">
@@ -229,6 +210,36 @@ export default function Home() {
               <p>{step.description}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="section about-preview" id="about-preview">
+        <div className="about-preview-photo" data-reveal>
+          <img
+            src={profileImage}
+            alt="Smit Patel graphic designer portrait"
+            loading="lazy"
+            width="720"
+            height="860"
+            decoding="async"
+          />
+        </div>
+        <div className="about-preview-copy" data-reveal>
+          <span className="eyebrow">About Smit</span>
+          <h2>Clean visual design with a practical, campaign-ready eye.</h2>
+          <p>
+            Smit designs poster systems, brand visuals, product layouts, and social content with a clean sense of
+            hierarchy. His work is crafted to be bold, readable, and ready for real digital or print use.
+          </p>
+          <div className="about-highlights">
+            <span>Poster design</span>
+            <span>Brand systems</span>
+            <span>Digital campaigns</span>
+            <span>Print-ready files</span>
+          </div>
+          <a className="btn btn-ghost" href="/about">
+            More About Smit
+          </a>
         </div>
       </section>
 
@@ -251,7 +262,8 @@ export default function Home() {
         </div>
         <div className="social-links" aria-label="Social links">
           {socials.map((social) => (
-            <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
+            <a className={`social-pill ${social.tone}`} key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
+              <span>{social.icon}</span>
               {social.label}
             </a>
           ))}

@@ -1,6 +1,6 @@
 import React from "react";
 import aboutImage from "../assets/images/about-image.png";
-import { processSteps, skills, whatsappHref } from "../data/site";
+import { processSteps, skillGroups, whatsappHref } from "../data/site";
 
 export default function About() {
   return (
@@ -24,7 +24,7 @@ export default function About() {
             <a className="btn btn-accent" href={whatsappHref} target="_blank" rel="noopener noreferrer">
               Let’s work together
             </a>
-            <a className="btn btn-ghost" href="/#work">
+            <a className="btn btn-ghost" href="/portfolio#work">
               View Projects
             </a>
           </div>
@@ -65,9 +65,22 @@ export default function About() {
           <span>Highlights</span>
           <h2>Skills and creative strengths</h2>
         </div>
-        <div className="skills-grid" data-reveal>
-          {skills.map((skill) => (
-            <span key={skill}>{skill}</span>
+        <div className="skill-groups">
+          {skillGroups.map((group) => (
+            <article className="skill-group-card" key={group.title} data-reveal>
+              <h3>{group.title}</h3>
+              <div className="skill-item-grid">
+                {group.items.map((item) => (
+                  <div className="skill-item" key={item.label}>
+                    <span className="skill-icon">{item.icon}</span>
+                    <div>
+                      <strong>{item.label}</strong>
+                      <p>{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
           ))}
         </div>
       </section>
