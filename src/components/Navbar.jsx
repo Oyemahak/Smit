@@ -158,6 +158,9 @@ export default function Navbar({ theme, onToggleTheme }) {
         <a className="mobile-hire-link" href={whatsappHref} target="_blank" rel="noopener noreferrer">
           Hire me
         </a>
+        <a className="mobile-contact-link" href="/#contact" onClick={() => setOpen(false)}>
+          Contact
+        </a>
       </div>
     </header>
   );

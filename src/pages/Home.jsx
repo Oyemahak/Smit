@@ -5,12 +5,21 @@ import { featuredItems, filters, portfolioItems } from "../data/portfolio";
 import { processSteps, services, skillGroups, socials, whatsappHref } from "../data/site";
 
 const heroHighlights = [
-  { label: "Graphic Design", icon: "graphic", symbol: "✦" },
-  { label: "Posters", icon: "poster", symbol: "▣" },
-  { label: "Branding", icon: "brand", symbol: "◆" },
-  { label: "Social Media Creatives", icon: "social", symbol: "↗" },
-  { label: "Campaign Visuals", icon: "campaign", symbol: "◉" },
+  { label: "Graphic Design", icon: "graphic" },
+  { label: "Posters", icon: "poster" },
+  { label: "Branding", icon: "brand" },
+  { label: "Social Media Creatives", icon: "social" },
+  { label: "Campaign Visuals", icon: "campaign" },
 ];
+
+const workTools = {
+  Posters: ["Photoshop", "Layout", "Print"],
+  Branding: ["Illustrator", "Identity", "Color"],
+  "Social Media Creatives": ["Canva", "Campaign", "Digital"],
+  "Campaign Visuals": ["Photoshop", "Ads", "Story"],
+  "Logo/Identity": ["Illustrator", "Logo", "Brand"],
+  "Typography/Layout": ["Figma", "Layout", "UX"],
+};
 
 function useRevealOnScroll(dependencies = []) {
   useEffect(() => {
@@ -85,6 +94,11 @@ function PortfolioCard({ item, index, onOpen }) {
         <span>{item.category}</span>
         <h3>{item.title}</h3>
         <p>{item.description}</p>
+        <div className="work-card-tags" aria-label={`${item.title} tools`}>
+          {(workTools[item.category] || ["Design"]).map((tool) => (
+            <em key={tool}>{tool}</em>
+          ))}
+        </div>
       </div>
     </button>
   );
@@ -133,7 +147,7 @@ export default function Home() {
           <div className="hero-highlights" aria-label="Design focus">
             {heroHighlights.map((item) => (
               <span className={`hero-chip hero-chip-${item.icon}`} key={item.label}>
-                <b aria-hidden="true">{item.symbol}</b>
+                <IconBadge name={item.icon} />
                 {item.label}
               </span>
             ))}
@@ -214,7 +228,7 @@ export default function Home() {
 
       <section className="section skills-section" id="skills">
         <SectionHeading eyebrow="Skills & Tools" title="Design Skills & Tools">
-          Organized tools and creative strengths employers and clients can understand quickly.
+          Organized digital, CMS, design, and workflow skills employers and clients can understand quickly.
         </SectionHeading>
         <div className="skill-groups">
           {skillGroups.map((group) => (

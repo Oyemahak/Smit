@@ -4,24 +4,16 @@ import { Link } from "react-router-dom";
 export default function NotFound() {
   return (
     <main id="main-content">
-      <section className="section-wrap">
-        <div className="section-head">
-          <div className="section-title-row">
-            <span className="section-star">✶</span>
-            <h2 className="section-title">404</h2>
-            <span className="section-star">✶</span>
-          </div>
-          <p className="section-subtitle">This page doesn’t exist.</p>
-        </div>
-
-        <div style={{ textAlign: "center", marginTop: 20 }}>
-          <Link className="btn btn-accent" to="/home">
+      <section className="not-found section">
+        <div className="glass-panel not-found-panel" data-reveal>
+          <span className="eyebrow">404</span>
+          <h1>Page not found.</h1>
+          <p>This page moved, disappeared, or was never part of the portfolio.</p>
+          <Link className="btn btn-accent" to="/">
             Back to Portfolio
           </Link>
         </div>
       </section>
-
-      <div className="separator" />
     </main>
   );
 }
