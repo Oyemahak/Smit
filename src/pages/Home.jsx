@@ -12,9 +12,15 @@ const heroHighlights = [
   { label: "Campaign Visuals", icon: "campaign" },
 ];
 
-function useRevealOnScroll() {
+function useRevealOnScroll(dependencies = []) {
   useEffect(() => {
     const items = document.querySelectorAll("[data-reveal]");
+
+    if (!("IntersectionObserver" in window)) {
+      items.forEach((item) => item.classList.add("is-visible"));
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -24,12 +30,23 @@ function useRevealOnScroll() {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.08, rootMargin: "0px 0px 120px" }
     );
 
-    items.forEach((item) => observer.observe(item));
+    items.forEach((item) => {
+      item.classList.remove("is-visible");
+      observer.observe(item);
+    });
+
+    window.setTimeout(() => {
+      document.querySelectorAll("[data-reveal]:not(.is-visible)").forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 160) item.classList.add("is-visible");
+      });
+    }, 180);
+
     return () => observer.disconnect();
-  }, []);
+  }, dependencies);
 }
 
 function SectionHeading({ eyebrow, title, children }) {
@@ -43,6 +60,8 @@ function SectionHeading({ eyebrow, title, children }) {
 }
 
 function PortfolioCard({ item, index, onOpen }) {
+  const isPriority = index < 8;
+
   return (
     <button
       className={`work-card work-card-${item.shape}`}
@@ -50,13 +69,14 @@ function PortfolioCard({ item, index, onOpen }) {
       aria-label={`Open ${item.title}`}
       onClick={() => onOpen(item)}
       data-reveal
-      style={{ "--delay": `${Math.min(index * 45, 360)}ms` }}
+      style={{ "--delay": `${Math.min(index * 35, 220)}ms` }}
     >
       <img
         src={item.src}
         alt={item.alt}
-        loading={index < 4 ? "eager" : "lazy"}
-        decoding="async"
+        loading={isPriority ? "eager" : "lazy"}
+        fetchPriority={index < 4 ? "high" : "auto"}
+        decoding={isPriority ? "sync" : "async"}
         width="900"
         height="1125"
       />
@@ -74,7 +94,7 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedWork, setSelectedWork] = useState(null);
 
-  useRevealOnScroll();
+  useRevealOnScroll([activeFilter]);
 
   useEffect(() => {
     if (!window.location.hash) return;
@@ -155,11 +175,11 @@ export default function Home() {
               <img
                 src={item.src}
                 alt={item.alt}
-                loading={index === 0 ? "eager" : "lazy"}
+                loading="eager"
                 fetchPriority={index === 0 ? "high" : "auto"}
                 width="900"
                 height="1125"
-                decoding="async"
+                decoding={index === 0 ? "sync" : "async"}
               />
               <span>{item.category}</span>
             </button>
@@ -185,9 +205,9 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="work-grid">
+        <div className="work-grid" key={activeFilter}>
           {visibleItems.map((item, index) => (
-            <PortfolioCard key={item.title} item={item} index={index} onOpen={setSelectedWork} />
+            <PortfolioCard key={`${activeFilter}-${item.title}`} item={item} index={index} onOpen={setSelectedWork} />
           ))}
         </div>
       </section>
@@ -311,7 +331,7 @@ export default function Home() {
             <button className="lightbox-close" type="button" aria-label="Close preview" onClick={() => setSelectedWork(null)}>
               ×
             </button>
-            <img src={selectedWork.src} alt={selectedWork.alt} />
+            <img src={selectedWork.src} alt={selectedWork.alt} loading="eager" decoding="sync" />
             <div className="lightbox-copy">
               <span>{selectedWork.category}</span>
               <h2>{selectedWork.title}</h2>
