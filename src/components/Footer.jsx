@@ -1,4 +1,5 @@
 import React from "react";
+import IconBadge from "./IconBadge";
 import { socials } from "../data/site";
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
       <nav className="footer-socials" aria-label="Footer social links">
         {socials.map((social) => (
           <a className={`social-pill ${social.tone}`} key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
-            <span>{social.icon}</span>
+            <IconBadge name={social.icon} />
             {social.label}
           </a>
         ))}

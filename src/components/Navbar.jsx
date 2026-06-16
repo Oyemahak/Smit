@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import { whatsappHref } from "../data/site";
@@ -10,9 +11,9 @@ export default function Navbar({ theme, onToggleTheme }) {
 
   const navItems = useMemo(
     () => [
-      { label: "Work", to: "/portfolio#work", isHash: true },
-      { label: "Skills", to: "/portfolio#skills", isHash: true },
-      { label: "Services", to: "/portfolio#services", isHash: true },
+      { label: "Work", to: "/#work", isHash: true },
+      { label: "Skills", to: "/#skills", isHash: true },
+      { label: "Services", to: "/#services", isHash: true },
       { label: "About", to: "/about" },
     ],
     []
@@ -63,7 +64,7 @@ export default function Navbar({ theme, onToggleTheme }) {
                   <li key={item.label}>
                     <a
                       href={item.to}
-                      className={location.pathname === "/portfolio" || location.pathname === "/home" ? "active" : ""}
+                      className={["/", "/portfolio", "/home"].includes(location.pathname) ? "active" : ""}
                       onClick={(e) => {
                         e.preventDefault();
                         handleNavClick(item);
@@ -97,7 +98,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             onClick={onToggleTheme}
           >
-            <span aria-hidden="true">{theme === "dark" ? "☾" : "☀"}</span>
+            <span aria-hidden="true">{theme === "dark" ? <FaMoon /> : <FaSun />}</span>
           </button>
 
           <a
@@ -130,7 +131,7 @@ export default function Navbar({ theme, onToggleTheme }) {
           aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
         >
           <span>{theme === "dark" ? "Light mode" : "Dark mode"}</span>
-          <strong>{theme === "dark" ? "☀" : "☾"}</strong>
+          <strong>{theme === "dark" ? <FaSun /> : <FaMoon />}</strong>
         </button>
         {navItems.map((item) => {
           if (item.isHash) {

@@ -1,7 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
+import IconBadge from "../components/IconBadge";
 import profileImage from "../assets/images/profile-image.png";
 import { featuredItems, filters, portfolioItems } from "../data/portfolio";
 import { processSteps, services, skillGroups, socials, whatsappHref } from "../data/site";
+
+const heroHighlights = [
+  { label: "Graphic Design", icon: "graphic" },
+  { label: "Posters", icon: "poster" },
+  { label: "Branding", icon: "brand" },
+  { label: "Social Media Creatives", icon: "social" },
+  { label: "Campaign Visuals", icon: "campaign" },
+];
 
 function useRevealOnScroll() {
   useEffect(() => {
@@ -43,7 +52,14 @@ function PortfolioCard({ item, index, onOpen }) {
       data-reveal
       style={{ "--delay": `${Math.min(index * 45, 360)}ms` }}
     >
-      <img src={item.src} alt={item.alt} loading={index < 4 ? "eager" : "lazy"} decoding="async" />
+      <img
+        src={item.src}
+        alt={item.alt}
+        loading={index < 4 ? "eager" : "lazy"}
+        decoding="async"
+        width="900"
+        height="1125"
+      />
       <span className="work-card-glass" />
       <div className="work-card-copy">
         <span>{item.category}</span>
@@ -87,16 +103,25 @@ export default function Home() {
         <div className="hero-background" aria-hidden="true" />
 
         <div className="hero-content" data-reveal>
-          <p className="eyebrow">Portfolio Home</p>
-          <h1>Designing Visuals That Stand Out</h1>
+          <p className="eyebrow">Graphic Designer Portfolio</p>
+          <h1>Smit Patel — Graphic Designer</h1>
           <p className="hero-lede">
-            Graphic designer creating posters, brand visuals, social media creatives, and campaign artwork with clean
-            layout, strong color, and clear storytelling.
+            Creative visuals for brands, campaigns, and social media. Explore selected posters, brand visuals, campaign
+            artwork, and digital designs built with clean layout, strong color, and clear storytelling.
           </p>
+
+          <div className="hero-highlights" aria-label="Design focus">
+            {heroHighlights.map((item) => (
+              <span key={item.label}>
+                <IconBadge name={item.icon} />
+                {item.label}
+              </span>
+            ))}
+          </div>
 
           <div className="hero-actions">
             <a className="btn btn-accent" href="#work">
-              Explore Work
+              Explore Creative Work
             </a>
             <a className="btn btn-ghost" href={whatsappHref} target="_blank" rel="noopener noreferrer">
               Hire Me
@@ -127,7 +152,15 @@ export default function Home() {
               type="button"
               onClick={() => setSelectedWork(item)}
             >
-              <img src={item.src} alt={item.alt} decoding="async" />
+              <img
+                src={item.src}
+                alt={item.alt}
+                loading={index === 0 ? "eager" : "lazy"}
+                fetchPriority={index === 0 ? "high" : "auto"}
+                width="900"
+                height="1125"
+                decoding="async"
+              />
               <span>{item.category}</span>
             </button>
           ))}
@@ -170,7 +203,7 @@ export default function Home() {
               <div className="skill-item-grid">
                 {group.items.map((item) => (
                   <div className="skill-item" key={item.label}>
-                    <span className="skill-icon">{item.icon}</span>
+                    <IconBadge name={item.icon} className="skill-icon" />
                     <div>
                       <strong>{item.label}</strong>
                       <p>{item.description}</p>
@@ -190,7 +223,7 @@ export default function Home() {
         <div className="service-grid">
           {services.map((service, index) => (
             <article className="service-card" key={service.title} data-reveal style={{ "--delay": `${index * 45}ms` }}>
-              <span>{service.icon}</span>
+              <IconBadge name={service.icon} />
               <h3>{service.title}</h3>
               <p>{service.description}</p>
             </article>
@@ -205,7 +238,8 @@ export default function Home() {
         <div className="process-grid">
           {processSteps.map((step, index) => (
             <article className="process-card" key={step.title} data-reveal style={{ "--delay": `${index * 70}ms` }}>
-              <span>{step.step}</span>
+              <IconBadge name={step.icon} />
+              <span className="process-step-number">{step.step}</span>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
             </article>
@@ -263,7 +297,7 @@ export default function Home() {
         <div className="social-links" aria-label="Social links">
           {socials.map((social) => (
             <a className={`social-pill ${social.tone}`} key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
-              <span>{social.icon}</span>
+              <IconBadge name={social.icon} />
               {social.label}
             </a>
           ))}

@@ -1,4 +1,5 @@
 import React from "react";
+import IconBadge from "../components/IconBadge";
 import aboutImage from "../assets/images/about-image.png";
 import { processSteps, skillGroups, whatsappHref } from "../data/site";
 
@@ -24,7 +25,7 @@ export default function About() {
             <a className="btn btn-accent" href={whatsappHref} target="_blank" rel="noopener noreferrer">
               Let’s work together
             </a>
-            <a className="btn btn-ghost" href="/portfolio#work">
+            <a className="btn btn-ghost" href="/#work">
               View Projects
             </a>
           </div>
@@ -72,7 +73,7 @@ export default function About() {
               <div className="skill-item-grid">
                 {group.items.map((item) => (
                   <div className="skill-item" key={item.label}>
-                    <span className="skill-icon">{item.icon}</span>
+                    <IconBadge name={item.icon} className="skill-icon" />
                     <div>
                       <strong>{item.label}</strong>
                       <p>{item.description}</p>
@@ -93,7 +94,8 @@ export default function About() {
         <div className="process-grid">
           {processSteps.map((step) => (
             <article className="process-card" key={step.title} data-reveal>
-              <span>{step.step}</span>
+              <IconBadge name={step.icon} />
+              <span className="process-step-number">{step.step}</span>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
             </article>

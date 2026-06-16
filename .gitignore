@@ -49,6 +49,7 @@ Thumbs.db
 # ---------------------------
 .eslintcache
 *.cache
+.npm-cache/
 
 # ✅ IMPORTANT:
 # Do NOT ignore src/assets/images/
