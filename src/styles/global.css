@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Sora:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap");
 
 :root {
   color-scheme: dark;
@@ -59,28 +59,16 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  font-family: "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(900px 580px at 12% -10%, rgba(238, 98, 85, 0.26), transparent 62%),
-    radial-gradient(760px 480px at 90% 12%, rgba(56, 189, 248, 0.16), transparent 58%),
-    radial-gradient(760px 480px at 45% 58%, rgba(167, 139, 250, 0.12), transparent 62%),
-    radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.05), transparent 34%),
+    radial-gradient(780px 440px at 12% -12%, rgba(238, 98, 85, 0.16), transparent 64%),
+    radial-gradient(720px 420px at 86% 2%, rgba(255, 154, 98, 0.08), transparent 62%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 50%, var(--bg) 100%);
 }
 
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
-  opacity: 0.11;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: linear-gradient(180deg, #000, transparent 72%);
+  content: none;
 }
 
 :root[data-theme="light"] body {
@@ -122,9 +110,9 @@ img {
   display: inline-flex;
   margin: 0 0 12px;
   color: var(--accent-2);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.055em;
   text-transform: uppercase;
 }
 
@@ -135,10 +123,10 @@ img {
 .about-page-copy h1,
 .not-found-panel h1 {
   margin: 0;
-  font-family: "Sora", "Outfit", system-ui, sans-serif;
-  font-weight: 760;
-  letter-spacing: -0.04em;
-  line-height: 1.03;
+  font-family: "Plus Jakarta Sans", "Manrope", system-ui, sans-serif;
+  font-weight: 780;
+  letter-spacing: -0.035em;
+  line-height: 1.07;
   text-wrap: balance;
 }
 
@@ -150,10 +138,10 @@ img {
 .glass-panel p,
 .not-found-panel p {
   max-width: 720px;
-  margin: 18px 0 0;
+  margin: 16px 0 0;
   color: var(--muted);
-  font-size: clamp(1rem, 1.16vw, 1.12rem);
-  line-height: 1.72;
+  font-size: clamp(0.98rem, 1.05vw, 1.08rem);
+  line-height: 1.68;
 }
 
 .btn,
@@ -238,10 +226,21 @@ a:focus-visible {
 
 .nav-shell {
   position: sticky;
-  top: 14px;
+  top: 12px;
   z-index: 80;
   width: min(var(--max), calc(100% - 32px));
-  margin: 14px auto 0;
+  margin: 12px auto 0;
+}
+
+.nav-shell::before {
+  content: "";
+  position: absolute;
+  inset: -34px 12% -18px;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgba(255, 173, 74, 0.22), rgba(238, 98, 85, 0.08), transparent 72%);
+  filter: blur(18px);
 }
 
 .nav-inner {
@@ -254,11 +253,11 @@ a:focus-visible {
   border-radius: 999px;
   padding: 8px 10px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.045)),
-    rgba(14, 14, 20, 0.68);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.115), rgba(255, 255, 255, 0.04)),
+    rgba(14, 14, 20, 0.72);
   box-shadow:
-    0 18px 70px rgba(0, 0, 0, 0.32),
-    0 12px 46px rgba(238, 98, 85, 0.1),
+    0 18px 64px rgba(0, 0, 0, 0.3),
+    0 12px 42px rgba(255, 154, 98, 0.13),
     0 0 0 1px rgba(255, 255, 255, 0.035),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(26px) saturate(1.35);
@@ -306,7 +305,7 @@ a:focus-visible {
 }
 
 .nav-brand-top {
-  font-family: "Sora", "Outfit", sans-serif;
+  font-family: "Plus Jakarta Sans", "Manrope", sans-serif;
   font-size: 1rem;
   font-weight: 800;
 }
@@ -479,11 +478,11 @@ a:focus-visible {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(390px, 0.74fr);
-  gap: clamp(32px, 6vw, 76px);
+  gap: clamp(28px, 5vw, 64px);
   align-items: center;
-  min-height: calc(100svh - 108px);
-  margin-top: 30px;
-  padding: clamp(28px, 5vw, 58px) 0 clamp(34px, 5vw, 64px);
+  min-height: calc(100svh - 96px);
+  margin-top: 22px;
+  padding: clamp(24px, 4.5vw, 48px) 0 clamp(30px, 5vw, 56px);
 }
 
 .hero-background,
@@ -498,36 +497,17 @@ a:focus-visible {
 .hero-background {
   inset: 7% 0 0;
   background:
-    radial-gradient(620px 360px at 12% 24%, rgba(238, 98, 85, 0.26), transparent 64%),
-    radial-gradient(620px 380px at 84% 30%, rgba(56, 189, 248, 0.18), transparent 66%),
-    radial-gradient(520px 340px at 65% 82%, rgba(250, 204, 21, 0.14), transparent 64%);
-  filter: blur(4px);
+    radial-gradient(620px 360px at 12% 24%, rgba(238, 98, 85, 0.16), transparent 66%),
+    radial-gradient(620px 380px at 84% 30%, rgba(255, 154, 98, 0.1), transparent 68%);
+  filter: blur(8px);
 }
 
 .hero-section::before {
-  content: "";
-  position: absolute;
-  inset: 8% 0 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.16;
-  background-image: radial-gradient(currentColor 1px, transparent 1px);
-  background-size: 28px 28px;
-  color: var(--accent-2);
-  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 70%, transparent);
+  content: none;
 }
 
 .hero-section::after {
-  content: "";
-  position: absolute;
-  inset: 13% 40% 12% -4%;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: 999px;
-  background:
-    linear-gradient(115deg, transparent 0 38%, rgba(255, 255, 255, 0.14) 39% 40%, transparent 41%),
-    linear-gradient(25deg, transparent 0 58%, rgba(255, 154, 98, 0.18) 59% 60%, transparent 61%);
-  opacity: 0.55;
+  content: none;
 }
 
 .hero-orbit {
@@ -558,8 +538,8 @@ a:focus-visible {
 .hero-orbit span:nth-child(4) { top: 48%; left: 0; animation-delay: -4.1s; }
 
 .hero-content h1 {
-  max-width: 760px;
-  font-size: clamp(4rem, 5.4vw, 5rem);
+  max-width: 700px;
+  font-size: clamp(3rem, 4.4vw, 4.35rem);
 }
 
 .hero-highlights,
@@ -582,7 +562,7 @@ a:focus-visible {
   background: var(--glass);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-weight: 800;
 }
 
@@ -704,7 +684,7 @@ a:focus-visible {
 }
 
 .section {
-  margin-top: clamp(58px, 7vw, 92px);
+  margin-top: clamp(52px, 6.2vw, 82px);
 }
 
 .section-heading {
@@ -715,23 +695,22 @@ a:focus-visible {
 .section-heading h2,
 .about-preview-copy h2,
 .contact-section h2 {
-  font-size: clamp(2.5rem, 3.35vw, 3rem);
-  font-weight: 740;
+  font-size: clamp(2.1rem, 2.8vw, 2.62rem);
+  font-weight: 760;
 }
 
 .filter-bar {
-  position: sticky;
-  top: 90px;
-  z-index: 10;
+  position: relative;
+  z-index: 1;
   display: flex;
   gap: 8px;
-  margin: 0 0 18px;
+  margin: 0 0 20px;
   padding: 7px;
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(14, 14, 20, 0.78);
-  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.2);
+  background: rgba(18, 18, 24, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   scrollbar-width: none;
   max-width: 100%;
@@ -750,7 +729,6 @@ a:focus-visible {
 
 .filter-bar button {
   flex: 0 0 auto;
-  max-width: min(180px, 46vw);
   border: 0;
   border-radius: 999px;
   padding: 11px 14px;
@@ -819,7 +797,7 @@ a:focus-visible {
 
 .work-card-copy h3 {
   margin: 6px 0 0;
-  font-family: "Sora", "Outfit", sans-serif;
+  font-family: "Plus Jakarta Sans", "Manrope", sans-serif;
   font-size: 1.15rem;
   line-height: 1.18;
 }
@@ -852,9 +830,9 @@ a:focus-visible {
 
 .skill-groups {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .skill-group-card,
@@ -879,8 +857,8 @@ a:focus-visible {
 .skill-group-card h3 {
   position: relative;
   margin: 0 0 18px;
-  font-family: "Sora", "Outfit", sans-serif;
-  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  font-family: "Plus Jakarta Sans", "Manrope", sans-serif;
+  font-size: clamp(1.12rem, 1.35vw, 1.32rem);
   font-weight: 740;
 }
 
@@ -888,56 +866,48 @@ a:focus-visible {
   content: "";
   display: block;
   width: 48px;
-  height: 3px;
-  margin-top: 10px;
+  height: 2px;
+  margin-top: 9px;
   border-radius: 999px;
   background: linear-gradient(90deg, var(--accent), transparent);
 }
 
 .skill-item-grid {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .skill-group-featured {
-  grid-row: span 2;
-  min-height: 100%;
+  grid-row: auto;
 }
 
 .skill-group-featured .skill-item-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
 .skill-group-featured .skill-item {
-  position: relative;
-  display: flex;
-  min-height: 164px;
-  flex-direction: column;
-  gap: 16px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 18px;
-  background:
-    radial-gradient(160px 120px at 90% 10%, color-mix(in srgb, currentColor 18%, transparent), transparent 62%),
-    rgba(255, 255, 255, 0.055);
-  transition: transform 240ms var(--ease), border-color 240ms var(--ease), background 240ms var(--ease);
+  min-height: 0;
 }
 
 .skill-group-featured .skill-item:hover {
-  transform: translateY(-4px);
-  border-color: var(--line-strong);
-  background:
-    radial-gradient(180px 140px at 90% 10%, color-mix(in srgb, currentColor 26%, transparent), transparent 64%),
-    rgba(255, 255, 255, 0.085);
+  transform: translateY(-2px);
 }
 
 .skill-item {
   display: grid;
-  grid-template-columns: 46px 1fr;
-  gap: 12px;
-  align-items: start;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  align-items: center;
+  min-height: 52px;
+  border-radius: 14px;
+  padding: 8px;
+  transition: background 200ms var(--ease), transform 200ms var(--ease);
+}
+
+.skill-item:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .icon-badge,
@@ -955,6 +925,22 @@ a:focus-visible {
   flex: 0 0 auto;
 }
 
+.skill-item .icon-badge,
+.skill-item .skill-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.skill-item .icon-badge svg {
+  width: 22px;
+  height: 22px;
+}
+
 .icon-badge svg {
   width: 25px;
   height: 25px;
@@ -969,6 +955,11 @@ a:focus-visible {
   box-shadow: none;
 }
 
+.hero-chip .icon-badge {
+  border: 0;
+  background: transparent;
+}
+
 .hero-chip .icon-badge svg,
 .social-pill .icon-badge svg {
   width: 15px;
@@ -977,14 +968,14 @@ a:focus-visible {
 
 .skill-item strong {
   display: block;
-  font-size: clamp(1rem, 1.15vw, 1.08rem);
+  font-size: 0.98rem;
 }
 
 .skill-item p {
-  margin: 5px 0 0;
+  margin: 2px 0 0;
   color: var(--subtle);
-  font-size: clamp(0.9rem, 1vw, 0.96rem);
-  line-height: 1.48;
+  font-size: 0.84rem;
+  line-height: 1.38;
 }
 
 .skill-group-design { --group-accent: var(--violet); }
@@ -1047,8 +1038,8 @@ a:focus-visible {
 .process-card h3,
 .glass-panel h2 {
   margin: 16px 0 8px;
-  font-family: "Sora", "Outfit", sans-serif;
-  font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+  font-family: "Plus Jakarta Sans", "Manrope", sans-serif;
+  font-size: clamp(1.12rem, 1.5vw, 1.35rem);
   font-weight: 730;
 }
 
@@ -1069,9 +1060,9 @@ a:focus-visible {
   inset: -52px 0 auto;
   height: 340px;
   background:
-    radial-gradient(520px 220px at 18% 28%, rgba(250, 204, 21, 0.16), transparent 66%),
-    radial-gradient(560px 260px at 82% 6%, rgba(56, 189, 248, 0.14), transparent 64%);
-  filter: blur(18px);
+    radial-gradient(520px 220px at 18% 28%, rgba(250, 204, 21, 0.08), transparent 66%),
+    radial-gradient(560px 260px at 82% 6%, rgba(56, 189, 248, 0.07), transparent 64%);
+  filter: blur(22px);
 }
 
 .process-card {
@@ -1189,13 +1180,13 @@ a:focus-visible {
 .whatsapp .icon-badge { background: #25d366; color: white; }
 
 .about-page {
-  margin-top: 70px;
-  grid-template-columns: minmax(0, 0.58fr) minmax(300px, 0.68fr);
+  margin-top: 56px;
+  grid-template-columns: minmax(0, 0.66fr) minmax(280px, 0.5fr);
 }
 
 .about-page-copy h1 {
-  max-width: 520px;
-  font-size: clamp(2rem, 3.15vw, 3.2rem);
+  max-width: 560px;
+  font-size: clamp(2rem, 2.75vw, 2.75rem);
 }
 
 .about-page-copy p {
@@ -1220,7 +1211,7 @@ a:focus-visible {
 
 .about-stat strong {
   display: block;
-  font-family: "Sora", "Outfit", sans-serif;
+  font-family: "Plus Jakarta Sans", "Manrope", sans-serif;
   font-size: clamp(1.05rem, 1.6vw, 1.35rem);
   line-height: 1.1;
 }
@@ -1238,7 +1229,7 @@ a:focus-visible {
 }
 
 .about-page-photo {
-  max-width: 560px;
+  max-width: 440px;
   justify-self: end;
   isolation: isolate;
 }
@@ -1395,7 +1386,7 @@ a:focus-visible {
 
 .lightbox-copy h2 {
   margin: 8px 0 10px;
-  font-family: "Sora", "Outfit", sans-serif;
+  font-family: "Plus Jakarta Sans", "Manrope", sans-serif;
   font-size: 1.55rem;
   line-height: 1.08;
 }
@@ -1454,7 +1445,7 @@ a:focus-visible {
 .site-footer strong {
   display: block;
   color: var(--text);
-  font-family: "Sora", "Outfit", sans-serif;
+  font-family: "Plus Jakarta Sans", "Manrope", sans-serif;
   font-size: 1rem;
 }
 
@@ -1513,7 +1504,6 @@ a:focus-visible {
 }
 
 @media (max-width: 1180px) {
-  .skill-groups,
   .service-grid,
   .process-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1571,14 +1561,13 @@ a:focus-visible {
   }
 
   .filter-bar {
-    flex-wrap: wrap;
-    border-radius: 22px;
-    overflow: visible;
-    contain: layout paint;
+    border-radius: 999px;
+    overflow-x: auto;
+    contain: paint;
   }
 
   .filter-bar button {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
   }
 
   .skill-group-featured .skill-item-grid {
@@ -1679,6 +1668,25 @@ a:focus-visible {
     line-height: 1.66;
   }
 
+  .hero-highlights {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+  }
+
+  .hero-highlights::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hero-chip {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
   .hero-actions,
   .about-actions,
   .contact-actions {
@@ -1760,8 +1768,14 @@ a:focus-visible {
   }
 
   .filter-bar {
-    top: 76px;
     border-radius: 18px;
+    margin-inline: -1px;
+    padding: 6px;
+    scrollbar-width: none;
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
   }
 
   .filter-bar button {
@@ -1770,24 +1784,36 @@ a:focus-visible {
   }
 
   .work-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 1px 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .work-grid::-webkit-scrollbar {
+    display: none;
   }
 
   .work-card,
   .work-card-wide,
   .work-card-tall {
-    grid-column: auto;
+    flex: 0 0 min(72vw, 280px);
     min-height: 0;
-    aspect-ratio: 4 / 5.25;
+    aspect-ratio: 4 / 5.35;
     border-radius: 18px;
+    scroll-snap-align: start;
   }
 
   .work-card-wide:nth-child(1),
   .work-card-wide:nth-child(4),
   .work-card-tall:nth-child(7) {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 10;
+    flex-basis: min(82vw, 340px);
+    aspect-ratio: 16 / 11;
   }
 
   .work-card-copy {

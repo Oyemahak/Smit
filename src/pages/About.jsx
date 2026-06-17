@@ -94,7 +94,7 @@ export default function About() {
       <section className="section skills-section">
         <div className="section-heading" data-reveal>
           <span>Toolkit</span>
-          <h2>Skills and creative strengths</h2>
+          <h2>Toolkit & Creative Workflow</h2>
         </div>
         <div className="skill-groups">
           {skillGroups.map((group) => (

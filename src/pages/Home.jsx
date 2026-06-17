@@ -233,8 +233,8 @@ export default function Home() {
       </section>
 
       <section className="section skills-section" id="skills">
-        <SectionHeading eyebrow="Skills & Tools" title="Design Skills & Tools">
-          A focused toolkit for polished poster systems, social creatives, brand visuals, and clean digital delivery.
+        <SectionHeading eyebrow="Toolkit" title="Toolkit & Creative Workflow">
+          A compact setup for polished posters, brand visuals, social creatives, and final delivery.
         </SectionHeading>
         <div className="skill-groups">
           {skillGroups.map((group) => (

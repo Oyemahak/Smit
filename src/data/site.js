@@ -39,7 +39,6 @@ export const skillGroups = [
   {
     title: "Design Tools",
     accent: "design",
-    featured: true,
     items: [
       { label: "Adobe Photoshop", icon: "photoshop", description: "Poster polish and image edits" },
       { label: "Adobe Illustrator", icon: "illustrator", description: "Logos and vector graphics" },
@@ -60,27 +59,13 @@ export const skillGroups = [
     ],
   },
   {
-    title: "Digital Stack",
-    accent: "digital",
-    items: [
-      { label: "HTML5", icon: "html", description: "Clean structure" },
-      { label: "CSS3", icon: "css", description: "Responsive styling" },
-      { label: "JavaScript", icon: "javascript", description: "Interactive UI" },
-      { label: "React", icon: "react", description: "Modern components" },
-      { label: "Vite", icon: "vite", description: "Fast builds" },
-      { label: "Tailwind", icon: "tailwind", description: "Utility systems" },
-    ],
-  },
-  {
-    title: "Workflow",
+    title: "Creative Workflow",
     accent: "workflow",
     items: [
-      { label: "TypeScript", icon: "typescript", description: "Typed handoff" },
-      { label: "Bootstrap", icon: "bootstrap", description: "Responsive layouts" },
-      { label: "WordPress", icon: "wordpress", description: "Editable sites" },
-      { label: "Elementor", icon: "elementor", description: "Visual CMS builds" },
-      { label: "Git", icon: "git", description: "Version control" },
-      { label: "GitHub", icon: "github", description: "Project hosting" },
+      { label: "Discover", icon: "discover", description: "Goal, audience, references" },
+      { label: "Concept", icon: "concept", description: "Direction, type, color" },
+      { label: "Design", icon: "design", description: "Polished campaign visuals" },
+      { label: "Deliver", icon: "deliver", description: "Files for web and print" },
     ],
   },
 ];
